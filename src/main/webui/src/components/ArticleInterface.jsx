@@ -2,14 +2,16 @@ import { useEffect, useRef } from 'react';
 import { StacksEditor } from '@stackoverflow/stacks-editor';
 import '@stackoverflow/stacks-editor/dist/styles.css';
 
-const TextEditor = ({ initialContent = '' }) => {
+const ArticleInterface = ({ initialContent = '' }) => {
+
     const editorContainerRef = useRef(null);
 
     useEffect(() => {
+
         // Initialize the Stacks Editor
         const editor = new StacksEditor(
             editorContainerRef.current,
-            initialContent
+            initialContent,
         );
 
         // Clean up the editor instance on component unmount
@@ -25,4 +27,4 @@ const TextEditor = ({ initialContent = '' }) => {
     );
 };
 
-export default TextEditor;
+export default ArticleInterface;
