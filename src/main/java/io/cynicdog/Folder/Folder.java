@@ -55,6 +55,10 @@ public class Folder {
         return children;
     }
 
+    public void removeChild(Folder child) {
+        children.remove(child);
+    }
+
     public void addSubFolders(Folder subFolder) {
         this.children.add(subFolder);
     }

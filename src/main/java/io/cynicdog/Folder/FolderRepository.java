@@ -21,7 +21,21 @@ public class FolderRepository {
     @Transactional
     public Folder createFolder(Folder folder) {
 
-        em.persist(folder);
+        em.merge(folder);
         return folder;
+    }
+
+    @Transactional
+    public void deleteFolder(Folder parent, Folder child) {
+
+        if (parent != null && child != null) {
+            Folder managedParent = em.find(Folder.class, parent.getId());
+            Folder managedChild = em.find(Folder.class, child.getId());
+
+            if (managedParent != null && managedChild != null) {
+                managedParent.removeChild(managedChild);
+                em.remove(managedChild);
+            }
+        }
     }
 }

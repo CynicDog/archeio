@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ArticleInterface from "./components/ArticleInterface.jsx";
-import { DirectoryArea } from "./components/DirectoryArea.jsx";
+import { FolderTree } from "./components/FolderTree.jsx";
 import DarkModeSwitch from "./components/DarkmodeSwitch.jsx";
 import { useTheme } from "./Context.jsx";
 import PostArea from "./components/PostArea.jsx";
@@ -9,7 +9,7 @@ import TagArea from "./components/TagArea.jsx";
 const App = () => {
     const { theme } = useTheme();
     const [selectedPost, setSelectedPost] = useState(null);
-    const [selectedFolder, setSelectedFolder] = useState({ parentDir: '', childDir: '' });
+    const [selectedFolderPath, setSelectedFolderPath] = useState({ parentDir: '', childDir: '' });
 
     const handlePostClick = (post) => {
         if (selectedPost && selectedPost.id === post.id) {
@@ -20,7 +20,7 @@ const App = () => {
     };
 
     const handleFolderSelect = (parentDir, childDir) => {
-        setSelectedFolder({ parentDir, childDir });
+        setSelectedFolderPath({ parentDir, childDir });
     };
 
     return (
@@ -29,7 +29,7 @@ const App = () => {
                 {/* Menu sidebar */}
                 <div className="col-lg-2">
                     <div className="bs-md rounded-3 p-2 mb-3">
-                        <DirectoryArea onSelectFolder={handleFolderSelect} />
+                        <FolderTree onFolderSelect={handleFolderSelect} />
                     </div>
                     <div className="bs-md rounded-3 p-2 mb-3">
                         <TagArea />
@@ -40,8 +40,8 @@ const App = () => {
                     <div className="bs-md rounded-3 p-3">
                         <PostArea
                             onPostClick={handlePostClick}
-                            parentDir={selectedFolder.parentDir}
-                            childDir={selectedFolder.childDir}
+                            parentDir={selectedFolderPath.parentDir}
+                            childDir={selectedFolderPath.childDir}
                         />
                     </div>
                 </div>

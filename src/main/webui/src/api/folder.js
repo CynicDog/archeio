@@ -16,7 +16,7 @@ export const getFolders = async () => {
     return endFolders;
 };
 
-export const createFolder = async (folder) => {
+export const saveFolder = async (folder) => {
     const response = await fetch('/api/folder', {
         method: 'POST',
         headers: {
@@ -30,4 +30,19 @@ export const createFolder = async (folder) => {
     }
 
     return await response.json();
+};
+
+export const deleteFolder = async (parent, child) => {
+    const requestBody = { parent: parent, child: child };
+    const response = await fetch('/api/folder', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to create folder');
+    }
 };

@@ -3,24 +3,22 @@ import ChevronRight from "../../public/ChevronRight.jsx";
 
 const Breadcrumbs = ({parentDir, childDir}) => {
     return (
-        <div className="breadcrumbs">
+        <div className="bg-light-subtle border border-1 rounded-3 p-2">
             <span className="text-body-secondary fs-3 fw-lighter">
-                {childDir !== '' && (
-                  <>
-                      {parentDir} {' '}
-                      {parentDir !== '' && (
-                          <>
-                              <ChevronRight/> {' '}
-                          </>
-                      )}
-                      {childDir} {' '}
-                  </>
-                )}
-                {childDir === '' && (
+                {parentDir === '' ? (
+                    <>All</>
+                ) : (
                     <>
-                        All
+                        {parentDir} {' '}
+                        {(parentDir !== '') && (childDir !== '') && (
+                            <>
+                                <ChevronRight/> {' '}
+                            </>
+                        )}
+                        {childDir} {' '}
                     </>
                 )}
+
             </span>
         </div>
     );
