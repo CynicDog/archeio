@@ -1,0 +1,11 @@
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-0', 'All', NULL);
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-1', 'Technologies', NULL);
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-1-1', 'Java', 'folder-1');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-1-2', 'C#', 'folder-1');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-1-3', 'JS', 'folder-1');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-2', 'Cloud', NULL);
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-2-1', 'Google Cloud Platform', 'folder-2');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-2-2', 'Azure', 'folder-2');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-3', 'Container / Orchestration', NULL);
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-3-1', 'Docker', 'folder-3');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-3-2', 'k8s', 'folder-3');

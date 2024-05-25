@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PostSummary = () => {
+const PostSummary = ({ post, onClick }) => {
 
     return (
         <div className="s-card my-3">
@@ -24,7 +24,9 @@ const PostSummary = () => {
                 </div>
                 <div className="s-post-summary--content">
                     <h3 className="s-post-summary--content-title">
-                        <a href="#">How to generate the JPA entity Metamodel?</a>
+                        <a className="text-secondary link-dark link-underline-opacity-0" onClick={onClick}>
+                            {post.title}
+                        </a>
                     </h3>
                     <p className="s-post-summary--content-excerpt">
                         In the spirit of type safety associated with the CriteriaQuery JPA 2.0 also has an API to support Metamodel representation of entities.
@@ -38,14 +40,6 @@ const PostSummary = () => {
                             <a className="s-tag" href="#">metamodel</a>
                         </div>
                         <div className="s-user-card s-user-card__minimal">
-                            <a href="#" className="s-avatar s-user-card--avatar">
-                                <img className="s-avatar--image" src="/assets/img/placeholder.svg" alt="placeholder avatar" />
-                                <span className="v-visible-sr">Paul Wright</span>
-                            </a>
-                            <a href="#" className="s-user-card--link">Paul Wright</a>
-                            <ul className="s-user-card--awards">
-                                <li className="s-user-card--rep">1350</li>
-                            </ul>
                             <time className="s-user-card--time">asked about 2 minutes ago</time>
                         </div>
                     </div>

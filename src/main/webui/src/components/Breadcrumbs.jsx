@@ -5,9 +5,22 @@ const Breadcrumbs = ({parentDir, childDir}) => {
     return (
         <div className="breadcrumbs">
             <span className="text-body-secondary fs-3 fw-lighter">
-                {parentDir} {' '}
-                <ChevronRight/> {' '}
-                {childDir} {' '}
+                {childDir !== '' && (
+                  <>
+                      {parentDir} {' '}
+                      {parentDir !== '' && (
+                          <>
+                              <ChevronRight/> {' '}
+                          </>
+                      )}
+                      {childDir} {' '}
+                  </>
+                )}
+                {childDir === '' && (
+                    <>
+                        All
+                    </>
+                )}
             </span>
         </div>
     );

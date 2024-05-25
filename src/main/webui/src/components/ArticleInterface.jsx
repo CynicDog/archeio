@@ -17,6 +17,10 @@ const ArticleInterface = ({ initialContent = '' }) => {
         // Clean up the editor instance on component unmount
         return () => {
             editor.destroy();
+
+            if (editorContainerRef.current) {
+                editorContainerRef.current.innerHTML = null
+            }
         };
     }, [initialContent]);
 
