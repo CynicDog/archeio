@@ -3,8 +3,8 @@ package io.cynicdog.Folder;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
-import java.util.List;
 import java.util.Map;
 
 @Path("/api/folder")
@@ -12,25 +12,35 @@ import java.util.Map;
 public class FolderResource {
 
     @Inject
-    FolderRepository folderRepository;
+    FolderService folderService;
 
     @GET
-    public List<Folder> findAll() {
-        return folderRepository.findAllFolders();
+    public Response findAll() {
+
+        var found = folderService.findAllFolders();
+
+        return Response.ok(found).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Folder saveFolder(Folder folder) {
+    public Response saveFolder(Folder folder) {
 
-        folder.getChildren().forEach(child -> child.setParent(folder));
+        var found = folderService.saveFolder(folder);
 
-        return folderRepository.save(folder);
+        return Response.ok(found).build();
     }
 
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteFolder(Map<String, Folder> payload) {
-        folderRepository.deleteFolder(payload.get("parent"), payload.get("child"));
+    public Response deleteFolder(Map<String, Folder> payload) {
+        try {
+            folderService.deleteFolder(payload);
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage()).build();
+        }
     }
 }

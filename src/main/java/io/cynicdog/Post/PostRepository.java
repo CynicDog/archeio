@@ -6,33 +6,35 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class PostRepository {
 
     @Inject
-    EntityManager em;
+    private EntityManager em;
 
-    @Transactional
     public List<Post> findAll() {
-        return em.createQuery("select p from Post p", Post.class).getResultList();
+        return em.createQuery("SELECT p FROM Post p", Post.class).getResultList();
     }
 
-    @Transactional
-    public Post findById(Long postId) {
-        return em.find(Post.class, postId);
+    public Optional<Post> findById(Long postId) {
+        return Optional.ofNullable(em.find(Post.class, postId));
     }
 
-    @Transactional
     public List<Post> findByFolder(String folderId) {
-        return em.createQuery("select p from Post p where p.folder.id = :folderId", Post.class)
+        return em.createQuery("SELECT p FROM Post p WHERE p.folder.id = :folderId", Post.class)
                 .setParameter("folderId", folderId)
                 .getResultList();
     }
 
     @Transactional
-    public void save(Post post) {
-
-        em.persist(post);
+    public Post save(Post post) {
+        if (post.getId() == null) {
+            em.persist(post);
+            return post;
+        } else {
+            return em.merge(post);
+        }
     }
 }
