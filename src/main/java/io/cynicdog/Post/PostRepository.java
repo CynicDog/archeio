@@ -15,7 +15,11 @@ public class PostRepository {
     private EntityManager em;
 
     public List<Post> findAll() {
-        return em.createQuery("SELECT p FROM Post p", Post.class).getResultList();
+        return em.createQuery("""
+                    select p 
+                    from Post p        
+                """, Post.class)
+                .getResultList();
     }
 
     public Optional<Post> findById(Long postId) {
@@ -23,7 +27,13 @@ public class PostRepository {
     }
 
     public List<Post> findByFolder(String folderId) {
-        return em.createQuery("SELECT p FROM Post p WHERE p.folder.id = :folderId", Post.class)
+
+        return em.createQuery("""
+                    select p 
+                    from Post p 
+                    where p.folder.parent.id = :folderId 
+                       or p.folder.id = :folderId 
+                """, Post.class)
                 .setParameter("folderId", folderId)
                 .getResultList();
     }

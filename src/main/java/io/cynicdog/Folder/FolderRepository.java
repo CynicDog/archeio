@@ -14,7 +14,11 @@ public class FolderRepository {
     private EntityManager em;
 
     public List<Folder> findAllFolders() {
-        return em.createQuery("SELECT f FROM Folder f WHERE f.parent IS NULL ORDER BY f.id", Folder.class)
+        return em.createQuery("""
+                    select f 
+                    from Folder f 
+                    where f.parent is null order by f.id
+                """, Folder.class)
                 .getResultList();
     }
 

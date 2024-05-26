@@ -2,8 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { StacksEditor } from '@stackoverflow/stacks-editor';
 import '@stackoverflow/stacks-editor/dist/styles.css';
 import { sendToServer } from "../data/post.js";
+import {usePostContext} from "../Context.jsx";
 
-const PostInterface = ({ initialContent = '', postId }) => {
+const PostInterface = () => {
+
+    const { selectedPost, setSelectedPost } = usePostContext();
+
+    const initialContent = selectedPost.content;
+
     const editorContainerRef = useRef(null);
     const timeoutHold = useRef(null);
 
@@ -24,6 +30,14 @@ const PostInterface = ({ initialContent = '', postId }) => {
             }
         );
 
+        // Set height of closest children of the editor container
+        if (editorContainerRef.current) {
+            const closestChildren = editorContainerRef.current.children;
+            for (let child of closestChildren) {
+                child.style.height = '720px';
+            }
+        }
+
         const handleContentChange = () => {
             // Debounce on input change
             clearTimeout(timeoutHold.current);
@@ -31,8 +45,10 @@ const PostInterface = ({ initialContent = '', postId }) => {
                 const content = editor.content;
                 const tags = extractTags(content);
 
-                let post = await sendToServer({ postId, content, tags });
-            }, 1500);
+                let updatedPost = await sendToServer({ postId: selectedPost.id, content, tags });
+
+                setSelectedPost(updatedPost);
+            }, 2000);
         };
 
         editor.editorView.dom.addEventListener('input', handleContentChange);
@@ -44,7 +60,7 @@ const PostInterface = ({ initialContent = '', postId }) => {
                 editorContainerRef.current.innerHTML = null;
             }
         };
-    }, [initialContent]);
+    }, [selectedPost.id]);
 
     const extractTags = (content) => {
         const tagRegex = /#(\w+)/g;

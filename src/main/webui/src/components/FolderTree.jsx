@@ -7,8 +7,12 @@ import Folder from "../../public/Folder.jsx";
 import FolderOpened from "../../public/FolderOpened.jsx";
 import {useQuery} from "react-query";
 import {getFolders} from "../data/folder.js";
+import {usePostContext} from "../Context.jsx";
 
 export const FolderTree = ({onFolderSelect}) => {
+
+    const { setSelectedPost } = usePostContext();
+
     const [showFolderInput, setShowFolderInput] = useState(false);
     const [activeItems, setActiveItems] = useState([]);
     const [selectedFolder, setSelectedFolder] = useState(null);
@@ -58,6 +62,7 @@ export const FolderTree = ({onFolderSelect}) => {
                                 onFolderSelect(treeViewItem.name, '', treeViewItem.id);
                                 setSelectedFolder(treeViewItem);
                             }
+                            setSelectedPost(null)
                         }}
                         icon={<Folder/>}
                         expandedIcon={<FolderOpened/>}/>

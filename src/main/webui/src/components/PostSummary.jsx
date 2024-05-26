@@ -1,6 +1,16 @@
 import React from 'react';
+import { usePostContext } from '../Context.jsx';
 
-const PostSummary = ({ post, onClick }) => {
+const PostSummary = ({ post, onPostClick }) => {
+
+    const { setSelectedPost } = usePostContext();
+
+    const handleClick = () => {
+        setSelectedPost(post);
+        onPostClick(post)
+    };
+
+    const title = post.content.split('\n')[0];
 
     return (
         <div className="s-card my-3">
@@ -24,11 +34,11 @@ const PostSummary = ({ post, onClick }) => {
                 </div>
                 <div className="s-post-summary--content">
                     <h3 className="s-post-summary--content-title">
-                        <a className="text-secondary link-dark link-underline-opacity-0" onClick={onClick}>
-                            {post.content}
+                        <a className="text-secondary link-dark link-underline-opacity-0" onClick={handleClick}>
+                            {title}
                         </a>
                     </h3>
-                    <p className="s-post-summary--content-excerpt">
+                    <p className="s-post-summary--content-excerpt v-truncate3">
                         {post.content}
                     </p>
                     <div className="s-post-summary--meta">

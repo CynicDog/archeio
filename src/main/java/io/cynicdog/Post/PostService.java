@@ -28,6 +28,7 @@ public class PostService {
     }
 
     public List<Post> findByFolder(String folderId) {
+
         return postRepository.findByFolder(folderId);
     }
 

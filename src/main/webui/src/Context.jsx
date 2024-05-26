@@ -17,4 +17,16 @@ export const ThemeProvider = ({children}) => {
     );
 }
 export const useTheme = () => useContext(ThemeContext);
+const PostContext = createContext();
 
+export const PostProvider = ({ children }) => {
+    const [selectedPost, setSelectedPost] = useState(null);
+
+    return (
+        <PostContext.Provider value={{ selectedPost, setSelectedPost }}>
+            {children}
+        </PostContext.Provider>
+    );
+};
+
+export const usePostContext = () => useContext(PostContext);

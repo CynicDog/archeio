@@ -14,6 +14,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     private Long views;
@@ -35,7 +36,7 @@ public class Post {
     private Set<Tag> tags = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "folder_id") // Assuming the column name in the Post table
+    @JoinColumn(name = "folder_id")
     private Folder folder;
 
     public Long getId() {

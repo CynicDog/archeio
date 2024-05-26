@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import PostInterface from "./components/PostInterface.jsx";
 import { FolderTree } from "./components/FolderTree.jsx";
 import DarkModeSwitch from "./components/DarkmodeSwitch.jsx";
-import { useTheme } from "./Context.jsx";
+import {usePostContext, useTheme} from "./Context.jsx";
 import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
 
 const App = () => {
     const { theme } = useTheme();
-    const [selectedPost, setSelectedPost] = useState(null);
+    const { selectedPost, setSelectedPost } = usePostContext();
     const [selectedFolderPath, setSelectedFolderPath] = useState({ parentDir: '', childDir: '', folderId: 'folder-0' });
 
     const handlePostClick = (post) => {
