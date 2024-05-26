@@ -33,12 +33,12 @@ public class PostResource {
     }
 
     @POST
-    @Path("/{folderId}/{postId}")
+    @Path("/{postId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response savePost(@PathParam("folderId") String folderId, @PathParam("postId") Long postId, Map<String, Object> payload) {
+    public Response savePost(@PathParam("postId") Long postId, Map<String, Object> payload) {
 
-        var found = postService.savePost(folderId, postId, payload);
+        var found = postService.savePost(postId, payload);
 
         return Response.ok(found).build();
     }

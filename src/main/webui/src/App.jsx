@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ArticleInterface from "./components/ArticleInterface.jsx";
+import PostInterface from "./components/PostInterface.jsx";
 import { FolderTree } from "./components/FolderTree.jsx";
 import DarkModeSwitch from "./components/DarkmodeSwitch.jsx";
 import { useTheme } from "./Context.jsx";
@@ -42,19 +42,15 @@ const App = () => {
                             onPostClick={handlePostClick}
                             parentDir={selectedFolderPath.parentDir}
                             childDir={selectedFolderPath.childDir}
-                            folderId={selectedFolderPath.folderId}
-                        />
+                            folderId={selectedFolderPath.folderId} />
                     </div>
                 </div>
                 {/* Detail area */}
                 {selectedPost && (
                     <div className="col-lg-5 mb-3">
-                        <ArticleInterface
+                        <PostInterface
                             initialContent={selectedPost.content}
-                            folderId={selectedFolderPath.folderId}
-                            postId={selectedPost.id}
-                            setSelectedPost={setSelectedPost}
-                        />
+                            postId={selectedPost.id} />
                     </div>
                 )}
             </div>

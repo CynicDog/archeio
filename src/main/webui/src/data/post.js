@@ -1,6 +1,6 @@
-export const sendToServer = ({ folderId, postId, content, tags }) => {
+export const sendToServer = ({ postId, content, tags }) => {
 
-    return fetch(`/api/post/${folderId}/${postId}`, {
+    return fetch(`/api/post/${postId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

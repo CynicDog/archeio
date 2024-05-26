@@ -34,7 +34,7 @@ public class Post {
     )
     private Set<Tag> tags = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "folder_id") // Assuming the column name in the Post table
     private Folder folder;
 

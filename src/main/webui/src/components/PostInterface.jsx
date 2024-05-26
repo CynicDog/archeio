@@ -3,7 +3,7 @@ import { StacksEditor } from '@stackoverflow/stacks-editor';
 import '@stackoverflow/stacks-editor/dist/styles.css';
 import { sendToServer } from "../data/post.js";
 
-const ArticleInterface = ({ initialContent = '', folderId, postId, setSelectedPost }) => {
+const PostInterface = ({ initialContent = '', postId }) => {
     const editorContainerRef = useRef(null);
     const timeoutHold = useRef(null);
 
@@ -31,9 +31,7 @@ const ArticleInterface = ({ initialContent = '', folderId, postId, setSelectedPo
                 const content = editor.content;
                 const tags = extractTags(content);
 
-                // Send content without tags and tags to the server
-                let post = await sendToServer({folderId, postId, content, tags});
-                setSelectedPost(post)
+                let post = await sendToServer({ postId, content, tags });
             }, 1500);
         };
 
@@ -64,4 +62,4 @@ const ArticleInterface = ({ initialContent = '', folderId, postId, setSelectedPo
     );
 };
 
-export default ArticleInterface;
+export default PostInterface;

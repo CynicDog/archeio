@@ -32,20 +32,15 @@ public class PostService {
     }
 
     @Transactional
-    public Post savePost(String folderId, Long postId, Map<String, Object> payload) {
+    public Post savePost(Long postId, Map<String, Object> payload) {
         String content = (String) payload.get("content");
         List<String> tagNames = (List<String>) payload.get("tags");
-
-        Folder folder = folderRepository
-                .findById(folderId)
-                .orElseThrow(() -> new IllegalArgumentException("Folder not found"));
 
         Post post = postRepository
                 .findById(postId)
                 .orElse(new Post());
 
         post.setContent(content);
-        post.setFolder(folder);
 
         for (String tagName : tagNames) {
             Tag tag = tagRepository
