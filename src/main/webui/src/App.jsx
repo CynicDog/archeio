@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PostInterface from "./components/PostInterface.jsx";
-import { FolderTree } from "./components/FolderTree.jsx";
+import {FolderTree} from "./components/FolderTree.jsx";
 import DarkModeSwitch from "./components/DarkmodeSwitch.jsx";
 import {usePostContext, useTheme} from "./Context.jsx";
 import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
+import Menu from "../public/Menu.jsx";
 
 const App = () => {
-    const { theme } = useTheme();
-    const { selectedPost, setSelectedPost } = usePostContext();
-    const [selectedFolderPath, setSelectedFolderPath] = useState({ parentDir: '', childDir: '', folderId: 'folder-0' });
+    const {theme} = useTheme();
+    const {selectedPost, setSelectedPost} = usePostContext();
+    const [selectedFolderPath, setSelectedFolderPath] = useState({parentDir: '', childDir: '', folderId: 'folder-0'});
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
 
     const handlePostClick = (post) => {
         if (selectedPost && selectedPost.id === post.id) {
@@ -19,38 +21,62 @@ const App = () => {
         }
     };
 
-    const handleFolderSelect = (parentDir, childDir, folderId) => {
-        setSelectedFolderPath({ parentDir, childDir, folderId });
+    const handleDirectorySelect = (parentDir, childDir, folderId) => {
+        setSelectedFolderPath({parentDir, childDir, folderId});
+    };
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const getMasterViewColWidth = () => {
+        if (isMenuOpen) {
+            return selectedPost ? '5' : '9';
+        } else {
+            return selectedPost ? '5' : '10';
+        }
     };
 
     return (
         <div className={`container-fluid p-3 ${theme === "dark" ? "theme-dark__forced" : ""}`}>
             <div className="row mt-4">
                 {/* Menu sidebar */}
-                <div className="col-lg-2">
+                <div className={`col-lg-${isMenuOpen ? '2' : '1'}`}>
                     <div className="bs-md rounded-3 p-2 mb-3">
-                        <FolderTree onFolderSelect={handleFolderSelect} />
+                        <div className="d-flex justify-content-between m-2">
+                            <div className="btn border border-0" onClick={toggleMenu}>
+                                <Menu/>
+                            </div>
+                            <div className="mt-1">
+                                <DarkModeSwitch/>
+                            </div>
+                        </div>
+                        {isMenuOpen && (
+                            <FolderTree onFolderSelect={handleDirectorySelect}/>
+                        )}
                     </div>
                     <div className="bs-md rounded-3 p-2 mb-3">
-                        <TagArea />
+
+                            <TagArea onTagSelect={handleDirectorySelect}/>
+
                     </div>
                 </div>
                 {/* Master view */}
-                <div className={`col-lg-${selectedPost ? 5 : 8} mb-3`}>
+                <div className={`col-lg-${getMasterViewColWidth()} mb-3`}>
                     <div className="bs-md rounded-3 p-3">
                         <PostArea
                             onPostClick={handlePostClick}
                             parentDir={selectedFolderPath.parentDir}
                             childDir={selectedFolderPath.childDir}
-                            folderId={selectedFolderPath.folderId} />
+                            folderId={selectedFolderPath.folderId}/>
                     </div>
                 </div>
                 {/* Detail area */}
                 {selectedPost && (
-                    <div className="col-lg-5 mb-3">
+                    <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
                         <PostInterface
                             initialContent={selectedPost.content}
-                            postId={selectedPost.id} />
+                            postId={selectedPost.id}/>
                     </div>
                 )}
             </div>

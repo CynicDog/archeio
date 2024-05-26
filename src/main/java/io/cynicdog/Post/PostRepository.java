@@ -38,6 +38,18 @@ public class PostRepository {
                 .getResultList();
     }
 
+    public List<Post> findByTag(String tagName) {
+
+        return em.createQuery("""
+                    select p 
+                    from Post p
+                    join p.tags t
+                    where t.name = :tagName
+                """, Post.class)
+                .setParameter("tagName", tagName)
+                .getResultList();
+    }
+
     @Transactional
     public Post save(Post post) {
         if (post.getId() == null) {

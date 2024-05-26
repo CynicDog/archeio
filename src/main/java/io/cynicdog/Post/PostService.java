@@ -32,6 +32,11 @@ public class PostService {
         return postRepository.findByFolder(folderId);
     }
 
+    public List<Post> findPostsByTag(String tagName) {
+
+        return postRepository.findByTag(tagName);
+    }
+
     @Transactional
     public Post savePost(Long postId, Map<String, Object> payload) {
         String content = (String) payload.get("content");

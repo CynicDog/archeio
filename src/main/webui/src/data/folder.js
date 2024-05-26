@@ -1,4 +1,4 @@
-export const getFolders = async () => {
+export const fetchFolders = async () => {
     const response = await fetch('/api/folder');
     const folders = await response.json();
 

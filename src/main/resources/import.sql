@@ -10,6 +10,9 @@ INSERT INTO folders (id, name, parent_id) VALUES ('folder-2-2', 'Azure', 'folder
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-3', 'Container & Orchestration', NULL);
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-3-1', 'Docker', 'folder-3');
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-3-2', 'k8s', 'folder-3');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-4', 'Projects', NULL);
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-1', 'Akouo', 'folder-4');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-2', 'Archeio', 'folder-4');
 
 -- Inserting sample data for posts
 INSERT INTO post (content, views, votes, timestamp, folder_id) VALUES
@@ -44,4 +47,14 @@ If you have any questions, feel free to reach out to us:
 Thank you for your interest in the **Awesome Project**! We look forward to collaborating with you.', 150, 25, CURRENT_TIMESTAMP, 'folder-0'),
 ('Sample post content 1', 100, 10, CURRENT_TIMESTAMP, 'folder-1-1'),
 ('Sample post content 2', 150, 20, CURRENT_TIMESTAMP, 'folder-1-2'),
-('Sample post content 3', 200, 15, CURRENT_TIMESTAMP, 'folder-1-3');
+('Sample post content 3', 200, 15, CURRENT_TIMESTAMP, 'folder-1-3'),
+('## Akouo', 200, 15, CURRENT_TIMESTAMP, 'folder-4-1'),
+('## Archeio
+
+- TODO
+
+- 1. tags deletion
+  2. sidebar tags get/refetch
+  3. add new post per child folder
+  4. delete a folder
+', 200, 15, CURRENT_TIMESTAMP, 'folder-4-2');

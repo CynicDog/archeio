@@ -1,21 +1,47 @@
-import {useTheme} from "../Context.jsx";
+import { useQuery } from "react-query";
+import { fetchTags } from "../data/tag.js";
+import { Spinner } from "@patternfly/react-core";
+import React, {useEffect} from "react";
+import {usePostContext} from "../Context.jsx";
 
-const TagArea = () => {
+const TagArea = ({onTagSelect}) => {
+
+    const { selectedPost, setSelectedPost } = usePostContext();
+
+    const { data: tags = [], isLoading, isError, refetch } = useQuery(
+        'tags',
+        () => fetchTags()
+    );
+
+    useEffect(() => {
+        if (selectedPost) {
+            refetch();
+        }
+    }, [selectedPost, refetch]);
 
     return (
         <div>
             <div className="p-2 fw-lighter">
                 Tags
             </div>
-            <a className="s-tag m-1" href="#">Java</a>
-            <a className="s-tag m-1" href="#">Persistence</a>
-            <a className="s-tag m-1" href="#">JPA</a>
-            <a className="s-tag m-1" href="#">Hibernate</a>
-            <a className="s-tag m-1" href="#">Panache</a>
-            <a className="s-tag m-1" href="#">Quarkus</a>
-            <a className="s-tag m-1" href="#">Supersonic</a>
+            {isLoading ? (
+                <div className="d-flex justify-content-center">
+                    <Spinner/>
+                </div>
+            ) : (
+                tags.map(tag => (
+                    <a key={tag.id}
+                       className="s-tag m-1"
+                       onClick={() => {
+                           onTagSelect('tags', tag.name, '');
+                           setSelectedPost(null);
+                       }}>
+                        {tag.name}
+                    </a>
+                ))
+            )}
         </div>
     );
 }
 
-export default TagArea
+export default TagArea;

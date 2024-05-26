@@ -66,7 +66,7 @@ const PostInterface = () => {
         const tagRegex = /#(\w+)/g;
         const matches = content.match(tagRegex);
         if (matches) {
-            return matches.map(match => match.slice(1)); // Remove '#' from tags
+            return matches.map(match => match.slice(1).toLowerCase()); // Remove '#' from tags
         }
         return [];
     };

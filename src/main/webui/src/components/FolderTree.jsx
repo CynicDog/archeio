@@ -6,7 +6,7 @@ import FolderEdit from './FolderEdit.jsx';
 import Folder from "../../public/Folder.jsx";
 import FolderOpened from "../../public/FolderOpened.jsx";
 import {useQuery} from "react-query";
-import {getFolders} from "../data/folder.js";
+import {fetchFolders} from "../data/folder.js";
 import {usePostContext} from "../Context.jsx";
 
 export const FolderTree = ({onFolderSelect}) => {
@@ -19,7 +19,7 @@ export const FolderTree = ({onFolderSelect}) => {
 
     const {data: folders = [], isLoading: isFolderLoading, refetch: setFolders} = useQuery(
         'folder',
-        () => getFolders(),
+        () => fetchFolders(),
         {
             staleTime: 600_000 // 10 minutes
         }
@@ -40,9 +40,6 @@ export const FolderTree = ({onFolderSelect}) => {
 
     return (
         <div>
-            <div className="d-flex justify-content-end m-2">
-                <DarkModeSwitch/>
-            </div>
             {isFolderLoading ? (
                 <div className="d-flex justify-content-center">
                     <Spinner/>
