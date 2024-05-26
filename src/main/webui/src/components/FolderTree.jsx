@@ -6,7 +6,7 @@ import FolderEdit from './FolderEdit.jsx';
 import Folder from "../../public/Folder.jsx";
 import FolderOpened from "../../public/FolderOpened.jsx";
 import {useQuery} from "react-query";
-import {getFolders} from "../api/folder.js";
+import {getFolders} from "../data/folder.js";
 
 export const FolderTree = ({onFolderSelect}) => {
     const [showFolderInput, setShowFolderInput] = useState(false);
@@ -17,7 +17,7 @@ export const FolderTree = ({onFolderSelect}) => {
         'folder',
         () => getFolders(),
         {
-            staleTime: 7_200_000 // 2 hours
+            staleTime: 600_000 // 10 minutes
         }
     );
 
@@ -53,9 +53,9 @@ export const FolderTree = ({onFolderSelect}) => {
                             if (!treeViewItem.children) {
                                 setActiveItems([treeViewItem]);
                                 const parent = folders.find(option => option.children && option.children.some(child => child.id === treeViewItem.id));
-                                onFolderSelect(parent ? parent.name : '', treeViewItem.name);
+                                onFolderSelect(parent ? parent.name : '', treeViewItem.name, treeViewItem.id);
                             } else {
-                                onFolderSelect(treeViewItem.name, '');
+                                onFolderSelect(treeViewItem.name, '', treeViewItem.id);
                                 setSelectedFolder(treeViewItem);
                             }
                         }}

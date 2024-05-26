@@ -9,7 +9,7 @@ import TagArea from "./components/TagArea.jsx";
 const App = () => {
     const { theme } = useTheme();
     const [selectedPost, setSelectedPost] = useState(null);
-    const [selectedFolderPath, setSelectedFolderPath] = useState({ parentDir: '', childDir: '' });
+    const [selectedFolderPath, setSelectedFolderPath] = useState({ parentDir: '', childDir: '', folderId: 'folder-0' });
 
     const handlePostClick = (post) => {
         if (selectedPost && selectedPost.id === post.id) {
@@ -19,8 +19,8 @@ const App = () => {
         }
     };
 
-    const handleFolderSelect = (parentDir, childDir) => {
-        setSelectedFolderPath({ parentDir, childDir });
+    const handleFolderSelect = (parentDir, childDir, folderId) => {
+        setSelectedFolderPath({ parentDir, childDir, folderId });
     };
 
     return (
@@ -42,13 +42,19 @@ const App = () => {
                             onPostClick={handlePostClick}
                             parentDir={selectedFolderPath.parentDir}
                             childDir={selectedFolderPath.childDir}
+                            folderId={selectedFolderPath.folderId}
                         />
                     </div>
                 </div>
                 {/* Detail area */}
                 {selectedPost && (
                     <div className="col-lg-5 mb-3">
-                        <ArticleInterface initialContent={selectedPost.title} />
+                        <ArticleInterface
+                            initialContent={selectedPost.content}
+                            folderId={selectedFolderPath.folderId}
+                            postId={selectedPost.id}
+                            setSelectedPost={setSelectedPost}
+                        />
                     </div>
                 )}
             </div>

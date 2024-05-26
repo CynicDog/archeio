@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CloseCircle from "../../public/CloseCircle.jsx";
-import {deleteFolder, saveFolder} from "../api/folder.js";
+import {deleteFolder, saveFolder} from "../data/folder.js";
 
 const FolderEdit = ({ folders, setFolders, setShowFolderInput, selectedFolder, setSelectedFolder }) => {
 

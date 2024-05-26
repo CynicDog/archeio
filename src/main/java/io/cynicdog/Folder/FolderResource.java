@@ -21,11 +21,11 @@ public class FolderResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Folder createFolder(Folder folder) {
+    public Folder saveFolder(Folder folder) {
 
         folder.getChildren().forEach(child -> child.setParent(folder));
 
-        return folderRepository.createFolder(folder);
+        return folderRepository.save(folder);
     }
 
     @DELETE

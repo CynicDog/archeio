@@ -19,7 +19,12 @@ public class FolderRepository {
     }
 
     @Transactional
-    public Folder createFolder(Folder folder) {
+    public Folder findById(String folderId) {
+        return em.find(Folder.class, folderId);
+    }
+
+    @Transactional
+    public Folder save(Folder folder) {
 
         em.merge(folder);
         return folder;
