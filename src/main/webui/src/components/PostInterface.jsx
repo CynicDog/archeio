@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { StacksEditor } from '@stackoverflow/stacks-editor';
 import '@stackoverflow/stacks-editor/dist/styles.css';
 import { savePost } from "../data/post.js";
-import {usePostContext} from "../Context.jsx";
+import { usePostContext } from "../Context.jsx";
 
 const PostInterface = () => {
 
@@ -30,13 +30,23 @@ const PostInterface = () => {
             }
         );
 
-        // Set height of closest children of the editor container
-        if (editorContainerRef.current) {
-            const closestChildren = editorContainerRef.current.children;
-            for (let child of closestChildren) {
-                child.style.height = '720px';
+        const setEditorHeight = () => {
+            if (editorContainerRef.current) {
+                const browserHeight = window.innerHeight;
+                const offset = 60;
+                const editorHeight = browserHeight - offset;
+
+                editorContainerRef.current.style.height = `${editorHeight}px`;
+
+                const closestChildren = editorContainerRef.current.children;
+                for (let child of closestChildren) {
+                    child.style.height = `${editorHeight}px`;
+                }
             }
-        }
+        };
+
+        setEditorHeight();
+        window.addEventListener('resize', setEditorHeight);
 
         const handleContentChange = () => {
             // Debounce on input change
@@ -59,6 +69,8 @@ const PostInterface = () => {
             if (editorContainerRef.current) {
                 editorContainerRef.current.innerHTML = null;
             }
+
+            window.removeEventListener('resize', setEditorHeight);
         };
     }, [selectedPost.id]);
 
