@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { StacksEditor } from '@stackoverflow/stacks-editor';
 import '@stackoverflow/stacks-editor/dist/styles.css';
-import { sendToServer } from "../data/post.js";
+import { savePost } from "../data/post.js";
 import {usePostContext} from "../Context.jsx";
 
 const PostInterface = () => {
@@ -45,7 +45,7 @@ const PostInterface = () => {
                 const content = editor.content;
                 const tags = extractTags(content);
 
-                let updatedPost = await sendToServer({ postId: selectedPost.id, content, tags });
+                let updatedPost = await savePost({ postId: selectedPost.id, content, tags });
 
                 setSelectedPost(updatedPost);
             }, 2000);

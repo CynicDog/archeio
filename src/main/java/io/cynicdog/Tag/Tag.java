@@ -34,6 +34,10 @@ public class Tag {
         return posts;
     }
 
+    public void removePost(Post post) {
+        this.posts.remove(post);
+    }
+
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }

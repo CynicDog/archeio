@@ -17,7 +17,8 @@ public class PostRepository {
     public List<Post> findAll() {
         return em.createQuery("""
                     select p 
-                    from Post p        
+                    from Post p   
+                    order by p.timestamp desc     
                 """, Post.class)
                 .getResultList();
     }
@@ -32,7 +33,8 @@ public class PostRepository {
                     select p 
                     from Post p 
                     where p.folder.parent.id = :folderId 
-                       or p.folder.id = :folderId 
+                       or p.folder.id = :folderId
+                    order by p.timestamp desc
                 """, Post.class)
                 .setParameter("folderId", folderId)
                 .getResultList();
@@ -50,7 +52,6 @@ public class PostRepository {
                 .getResultList();
     }
 
-    @Transactional
     public Post save(Post post) {
         if (post.getId() == null) {
             em.persist(post);

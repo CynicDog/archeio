@@ -38,7 +38,7 @@ const PostArea = ({onPostClick, parentDir, childDir, folderId}) => {
 
     return (
         <>
-            <Breadcrumbs parentDir={parentDir} childDir={childDir}/>
+            <Breadcrumbs parentDir={parentDir} childDir={childDir} folderId={folderId}/>
             {isLoading ? (
                 <div className="d-flex justify-content-center">
                     <Spinner/>

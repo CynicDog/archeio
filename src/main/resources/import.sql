@@ -45,16 +45,13 @@ If you have any questions, feel free to reach out to us:
 - **GitHub**: [github.com/your-username/awesome-project](https://github.com/your-username/awesome-project)
 
 Thank you for your interest in the **Awesome Project**! We look forward to collaborating with you.', 150, 25, CURRENT_TIMESTAMP, 'folder-0'),
-('Sample post content 1', 100, 10, CURRENT_TIMESTAMP, 'folder-1-1'),
-('Sample post content 2', 150, 20, CURRENT_TIMESTAMP, 'folder-1-2'),
-('Sample post content 3', 200, 15, CURRENT_TIMESTAMP, 'folder-1-3'),
 ('## Akouo', 200, 15, CURRENT_TIMESTAMP, 'folder-4-1'),
 ('## Archeio
 
 - TODO
 
 - 1. tags deletion
-  2. sidebar tags get/refetch
-  3. add new post per child folder
-  4. delete a folder
+  2. ~~sidebar tags get/refetch~~
+  3. ~~add new post per child folder~~
+  4. delete a post
 ', 200, 15, CURRENT_TIMESTAMP, 'folder-4-2');

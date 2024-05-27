@@ -3,7 +3,7 @@ package io.cynicdog.Folder;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +26,6 @@ public class FolderRepository {
         return Optional.ofNullable(em.find(Folder.class, folderId));
     }
 
-    @Transactional
     public Folder save(Folder folder) {
         if (folder.getId() == null) {
             em.persist(folder);
@@ -36,8 +35,7 @@ public class FolderRepository {
         }
     }
 
-    @Transactional
-    public void deleteFolder(Folder parent, Folder child) {
+    public void delete(Folder parent, Folder child) {
         if (parent != null && child != null) {
             Folder managedParent = em.find(Folder.class, parent.getId());
             Folder managedChild = em.find(Folder.class, child.getId());

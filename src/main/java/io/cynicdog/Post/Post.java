@@ -4,6 +4,7 @@ import io.cynicdog.Folder.Folder;
 import io.cynicdog.Tag.Tag;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.*;
 
@@ -24,7 +25,7 @@ public class Post {
 
     private Long votes;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     private Date timestamp;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -39,6 +40,13 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "folder_id")
     private Folder folder;
+
+    public Post() {
+    }
+
+    public Post(Folder folder) {
+        this.folder = folder;
+    }
 
     public Long getId() {
         return id;
@@ -94,6 +102,10 @@ public class Post {
 
     public void addTag(Tag tag) {
         this.tags.add(tag);
+    }
+
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
     }
 
     public Folder getFolder() {

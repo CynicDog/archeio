@@ -1,11 +1,11 @@
-export const sendToServer = ({ postId, content, tags }) => {
+export const savePost = ({ postId, content, tags, folderId }) => {
 
     return fetch(`/api/post/${postId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ content, tags })
+        body: JSON.stringify({ content, tags, folderId })
     })
         .then(response => {
             if (!response.ok) {

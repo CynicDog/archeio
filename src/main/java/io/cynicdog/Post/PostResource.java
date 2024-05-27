@@ -1,5 +1,6 @@
 package io.cynicdog.Post;
 
+import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;

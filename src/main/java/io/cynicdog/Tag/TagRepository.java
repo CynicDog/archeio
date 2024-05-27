@@ -27,12 +27,15 @@ public class TagRepository {
                 .getResultList();
     }
 
-    @Transactional
     public void save(Tag tag) {
         if (tag.getName() == null) {
             em.persist(tag);
         } else {
             em.merge(tag);
         }
+    }
+
+    public void delete(Tag tag) {
+        em.remove(tag);
     }
 }

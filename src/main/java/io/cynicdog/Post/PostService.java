@@ -8,8 +8,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PostService {
@@ -37,29 +40,62 @@ public class PostService {
         return postRepository.findByTag(tagName);
     }
 
-    @Transactional
     public Post savePost(Long postId, Map<String, Object> payload) {
         String content = (String) payload.get("content");
         List<String> tagNames = (List<String>) payload.get("tags");
 
         Post post = postRepository
                 .findById(postId)
-                .orElse(new Post());
+                .orElseGet(() -> new Post(folderRepository.findById((String) payload.get("folderId")).orElse(null)));
 
         post.setContent(content);
 
-        for (String tagName : tagNames) {
-            Tag tag = tagRepository
-                    .findByName(tagName)
-                    .orElseGet(() -> {
-                        Tag newTag = new Tag(tagName);
-                        tagRepository.save(newTag);
-                        return newTag;
-                    });
-
-            post.addTag(tag);
+        if (tagNames != null) {
+            updateTags(post, tagNames);
         }
 
-        return postRepository.save(post);
+        Post saved = postRepository.save(post);
+
+        return saved;
+    }
+
+    public void updateTags(Post post, List<String> tagNames) {
+        Set<String> currentTagNames = post.getTags().stream()
+                .map(Tag::getName)
+                .collect(Collectors.toSet());
+
+        Set<String> newTagNames = new HashSet<>(tagNames);
+
+        // Tags to add
+        for (String tagName : newTagNames) {
+            if (!currentTagNames.contains(tagName)) {
+                Tag tag = tagRepository
+                        .findByName(tagName)
+                        .orElseGet(() -> {
+                            Tag newTag = new Tag(tagName);
+                            tagRepository.save(newTag);
+                            return newTag;
+                        });
+
+                post.addTag(tag);
+            }
+        }
+
+        // Tags to remove
+        for (String tagName : currentTagNames) {
+            if (!newTagNames.contains(tagName)) {
+                tagRepository
+                        .findByName(tagName)
+                        .ifPresent(tag -> {
+                            // bidirectional reference removal
+                            post.removeTag(tag);
+                            tag.removePost(post);
+
+                            if (tag.getPosts().isEmpty()) {
+                                tagRepository.delete(tag);
+                            }
+                        });
+            }
+        }
     }
 }

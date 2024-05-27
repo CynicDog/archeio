@@ -25,6 +25,6 @@ public class FolderService {
     }
 
     public void deleteFolder(Map<String, Folder> payload) {
-        folderRepository.deleteFolder(payload.get("parent"), payload.get("child"));
+        folderRepository.delete(payload.get("parent"), payload.get("child"));
     }
 }

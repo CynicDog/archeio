@@ -5,16 +5,21 @@ const PostSummary = ({ post, onPostClick }) => {
 
     const { setSelectedPost } = usePostContext();
 
-    const handleClick = () => {
+    const handlePostClick = () => {
         setSelectedPost(post);
         onPostClick(post)
+    };
+
+    const handleMenuClick = (event) => {
+
+        event.stopPropagation();
     };
 
     const title = post.content.split('\n')[0];
 
     return (
         <div className="s-card my-3">
-            <div className="s-post-summary">
+            <div className="s-post-summary" onClick={handlePostClick}>
                 <div className="s-post-summary--stats">
                     <div className="s-post-summary--stats-item s-post-summary--stats-item__emphasized">
                         <span className="s-post-summary--stats-item-number">{post.votes}</span>
@@ -33,30 +38,34 @@ const PostSummary = ({ post, onPostClick }) => {
                     </div>
                 </div>
                 <div className="s-post-summary--content">
-                    <h3 className="s-post-summary--content-title">
-                        <a className="text-secondary link-dark link-underline-opacity-0" onClick={handleClick}>
-                            {title}
-                        </a>
-                    </h3>
-                    <p className="s-post-summary--content-excerpt v-truncate3">
-                        {post.content}
-                    </p>
-                    <div className="s-post-summary--meta">
-                        <div className="s-post-summary--meta-tags">
-                            {post.tags.map(tag => (
-                                <a key={tag.name} className="s-tag" href="#">{tag.name}</a>
-                            ))}
-                        </div>
-                        <div className="s-user-card s-user-card__minimal">
-                            <time className="s-user-card--time">{new Date(post.timestamp).toLocaleString()}</time>
+                    <div >
+                        <h3 className="s-post-summary--content-title">
+                            <a className="text-secondary link-dark link-underline-opacity-0">
+                                {title}
+                            </a>
+                        </h3>
+                        <p className="s-post-summary--content-excerpt v-truncate3">
+                            {post.content}
+                        </p>
+                        <div className="s-post-summary--meta">
+                            <div className="s-post-summary--meta-tags">
+                                {post.tags.map(tag => (
+                                    <a key={tag.name} className="s-tag" href="#">{tag.name}</a>
+                                ))}
+                            </div>
+                            <div className="s-user-card s-user-card__minimal">
+                                <time className="s-user-card--time">{new Date(post.timestamp).toLocaleString()}</time>
+                            </div>
                         </div>
                     </div>
-                    <a href="#" className="s-btn s-btn__muted s-post-summary--content-menu-button">
-                        <svg aria-hidden="true" className="svg-icon iconEllipsisVertical" width="17" height="18" viewBox="0 0 17 18">
-                            <path d="M7 4.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m0 5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M8.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"></path>
-                        </svg>
-                        <span className="v-visible-sr">menu</span>
-                    </a>
+                    <div onClick={handleMenuClick}>
+                        <a href="#" className="s-btn s-btn__muted s-post-summary--content-menu-button" >
+                            <svg aria-hidden="true" className="svg-icon iconEllipsisVertical" width="17" height="18" viewBox="0 0 17 18">
+                                <path d="M7 4.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m0 5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M8.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"></path>
+                            </svg>
+                            <span className="v-visible-sr">menu</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

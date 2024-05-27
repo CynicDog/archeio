@@ -74,9 +74,11 @@ const App = () => {
                 {/* Detail area */}
                 {selectedPost && (
                     <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
-                        <PostInterface
-                            initialContent={selectedPost.content}
-                            postId={selectedPost.id}/>
+                        <div style={{position: 'sticky', top: '30px'}}>
+                            <PostInterface
+                                initialContent={selectedPost.content}
+                                postId={selectedPost.id}/>
+                        </div>
                     </div>
                 )}
             </div>
