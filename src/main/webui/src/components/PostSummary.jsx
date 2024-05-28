@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { usePostContext } from '../Context.jsx';
 
 const PostSummary = ({ post, onPostClick }) => {
@@ -11,7 +12,6 @@ const PostSummary = ({ post, onPostClick }) => {
     };
 
     const handleMenuClick = (event) => {
-
         event.stopPropagation();
     };
 
@@ -38,7 +38,7 @@ const PostSummary = ({ post, onPostClick }) => {
                     </div>
                 </div>
                 <div className="s-post-summary--content">
-                    <div >
+                    <div>
                         <h3 className="s-post-summary--content-title">
                             <a className="text-secondary link-dark link-underline-opacity-0">
                                 {title}
@@ -54,12 +54,12 @@ const PostSummary = ({ post, onPostClick }) => {
                                 ))}
                             </div>
                             <div className="s-user-card s-user-card__minimal">
-                                <time className="s-user-card--time">{new Date(post.timestamp).toLocaleString()}</time>
+                                <time className="s-user-card--time">{moment(post.timestamp).fromNow()}</time>
                             </div>
                         </div>
                     </div>
                     <div onClick={handleMenuClick}>
-                        <a href="#" className="s-btn s-btn__muted s-post-summary--content-menu-button" >
+                        <a href="#" className="s-btn s-btn__muted s-post-summary--content-menu-button">
                             <svg aria-hidden="true" className="svg-icon iconEllipsisVertical" width="17" height="18" viewBox="0 0 17 18">
                                 <path d="M7 4.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m0 5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M8.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"></path>
                             </svg>

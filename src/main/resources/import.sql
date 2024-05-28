@@ -13,6 +13,9 @@ INSERT INTO folders (id, name, parent_id) VALUES ('folder-3-2', 'k8s', 'folder-3
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-4', 'Projects', NULL);
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-1', 'Akouo', 'folder-4');
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-2', 'Archeio', 'folder-4');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-5', 'Database', NULL);
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-5-1', 'PostgreSQL', 'folder-5');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-5-2', 'SQL Server', 'folder-5');
 
 -- Inserting sample data for posts
 INSERT INTO post (content, views, votes, timestamp, folder_id) VALUES
@@ -54,4 +57,24 @@ Thank you for your interest in the **Awesome Project**! We look forward to colla
   2. ~~sidebar tags get/refetch~~
   3. ~~add new post per child folder~~
   4. delete a post
-', 200, 15, CURRENT_TIMESTAMP, 'folder-4-2');
+', 200, 15, CURRENT_TIMESTAMP, 'folder-4-2'),
+('# Dump / Restore from a docker container
+
+
+
+### Dump
+
+```
+docker exec -t {CONTAINER_ID} pg_dump --no-owner -U {USERNAME} {DATABASE_NAME} > {BACKUP_FILE_NAME}.sql
+```
+
+
+### Restore
+
+```
+cat {BACKUP_FILE_NAME}.sql | docker exec -i {CONTAINER_ID} psql -U postgres -d {DATABASE_NAME}
+```
+
+', 200, 15, CURRENT_TIMESTAMP, 'folder-5-1');
+
+
