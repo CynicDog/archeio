@@ -24,6 +24,10 @@ public class FolderService {
         return folderRepository.save(folder);
     }
 
+    public String findFolderPathById(String folderId) {
+        return folderRepository.findFolderPathById(folderId);
+    }
+
     public void deleteFolder(Map<String, Folder> payload) {
         folderRepository.delete(payload.get("parent"), payload.get("child"));
     }

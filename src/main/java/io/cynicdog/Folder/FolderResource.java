@@ -23,6 +23,15 @@ public class FolderResource {
         return Response.ok(found).build();
     }
 
+    @GET
+    @Path("/{folderId}/path")
+    public Response findFolderPa(@PathParam("folderId") String folderId) {
+
+        var found = folderService.findFolderPathById(folderId);
+
+        return Response.ok(found).build();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional

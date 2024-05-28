@@ -27,13 +27,13 @@ public class PostRepository {
         return Optional.ofNullable(em.find(Post.class, postId));
     }
 
+    // materialized path model over hierarchical structure of Folder entity
     public List<Post> findByFolder(String folderId) {
-
         return em.createQuery("""
-                    select p 
-                    from Post p 
-                    where p.folder.parent.id = :folderId 
-                       or p.folder.id = :folderId
+                    select p
+                    from Post p
+                    where p.folder.id = :folderId
+                       or p.folder.id like CONCAT(:folderId, '-%')
                     order by p.timestamp desc
                 """, Post.class)
                 .setParameter("folderId", folderId)

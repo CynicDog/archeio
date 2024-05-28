@@ -3,6 +3,7 @@ package io.cynicdog.Folder;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,26 @@ public class FolderRepository {
         } else {
             return em.merge(folder);
         }
+    }
+
+    public String findFolderPathById(String folderId) {
+        return (String) em.createNativeQuery("""
+                       with recursive folder_path as (
+                            select id, cast(name as text) as name, parent_id, cast(name as text) as full_path
+                            from folders 
+                            where id = ?1
+                            union all 
+                            select f.id, f.name, f.parent_id, concat(f.name, ' > ', fp.full_path)
+                            from folders f 
+                            join folder_path fp on f.id = fp.parent_id 
+                       )
+                       select full_path 
+                       from folder_path
+                       order by id asc
+                       limit 1
+                   """)
+                .setParameter(1, folderId)
+                .getSingleResult();
     }
 
     public void delete(Folder parent, Folder child) {
