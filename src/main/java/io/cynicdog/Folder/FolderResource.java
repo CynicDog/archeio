@@ -25,7 +25,7 @@ public class FolderResource {
 
     @GET
     @Path("/{folderId}/path")
-    public Response findFolderPa(@PathParam("folderId") String folderId) {
+    public Response findFolderPath(@PathParam("folderId") String folderId) {
 
         var found = folderService.findFolderPathById(folderId);
 
