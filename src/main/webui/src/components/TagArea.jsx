@@ -2,11 +2,11 @@ import { useQuery } from "react-query";
 import { fetchTags } from "../data/tag.js";
 import { Spinner } from "@patternfly/react-core";
 import React, {useEffect} from "react";
-import {usePostContext} from "../Context.jsx";
+import {useSelectedItemContext} from "../Context.jsx";
 
 const TagArea = ({onTagSelect}) => {
 
-    const { selectedPost, setSelectedPost } = usePostContext();
+    const { selectedPost, setSelectedPost } = useSelectedItemContext();
 
     const { data: tags = [], isLoading, isError, refetch } = useQuery(
         'tags',
@@ -33,6 +33,7 @@ const TagArea = ({onTagSelect}) => {
                     <a key={tag.id}
                        className="s-tag m-1"
                        onClick={() => {
+                           /*TODO */
                            onTagSelect('tags', tag.name, '');
                            setSelectedPost(null);
                        }}>

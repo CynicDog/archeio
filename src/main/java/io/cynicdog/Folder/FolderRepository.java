@@ -43,7 +43,7 @@ public class FolderRepository {
                             from folders 
                             where id = ?1
                             union all 
-                            select f.id, f.name, f.parent_id, concat(f.name, ' > ', fp.full_path)
+                            select f.id, f.name, f.parent_id, concat(f.name, ' / ', fp.full_path)
                             from folders f 
                             join folder_path fp on f.id = fp.parent_id 
                        )

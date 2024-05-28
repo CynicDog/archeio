@@ -1,3 +1,8 @@
+export const fetchFolderPath = async (folderId) => {
+    const response = await fetch(`/api/folder/${folderId}/path`);
+    return await response.text();
+}
+
 export const fetchFolders = async () => {
     const response = await fetch('/api/folder');
     const folders = await response.json();

@@ -2,15 +2,14 @@ import React, {useState} from 'react';
 import PostInterface from "./components/PostInterface.jsx";
 import {FolderTree} from "./components/FolderTree.jsx";
 import DarkModeSwitch from "./components/DarkmodeSwitch.jsx";
-import {usePostContext, useTheme} from "./Context.jsx";
+import {useSelectedItemContext, useTheme} from "./Context.jsx";
 import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
 
 const App = () => {
     const {theme} = useTheme();
-    const {selectedPost, setSelectedPost} = usePostContext();
-    const [selectedFolderPath, setSelectedFolderPath] = useState({parentDir: '', childDir: '', folderId: 'folder-0'});
+    const {selectedPost, setSelectedPost} = useSelectedItemContext();
     const [isMenuOpen, setIsMenuOpen] = useState(true);
 
     const handlePostClick = (post) => {
@@ -19,10 +18,6 @@ const App = () => {
         } else {
             setSelectedPost(post); // Select the new post
         }
-    };
-
-    const handleDirectorySelect = (parentDir, childDir, folderId) => {
-        setSelectedFolderPath({parentDir, childDir, folderId});
     };
 
     const toggleMenu = () => {
@@ -52,23 +47,17 @@ const App = () => {
                             </div>
                         </div>
                         {isMenuOpen && (
-                            <FolderTree onFolderSelect={handleDirectorySelect}/>
+                            <FolderTree />
                         )}
                     </div>
                     <div className="bs-md rounded-3 p-2 mb-3">
-
-                            <TagArea onTagSelect={handleDirectorySelect}/>
-
+                        <TagArea />
                     </div>
                 </div>
                 {/* Master view */}
                 <div className={`col-lg-${getMasterViewColWidth()} mb-3`}>
                     <div className="bs-md rounded-3 p-3">
-                        <PostArea
-                            onPostClick={handlePostClick}
-                            parentDir={selectedFolderPath.parentDir}
-                            childDir={selectedFolderPath.childDir}
-                            folderId={selectedFolderPath.folderId}/>
+                        <PostArea onPostClick={handlePostClick}/>
                     </div>
                 </div>
                 {/* Detail area */}

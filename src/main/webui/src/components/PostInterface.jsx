@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { StacksEditor } from '@stackoverflow/stacks-editor';
 import '@stackoverflow/stacks-editor/dist/styles.css';
 import { savePost } from "../data/post.js";
-import { usePostContext } from "../Context.jsx";
+import { useSelectedItemContext } from "../Context.jsx";
 
 const PostInterface = () => {
 
-    const { selectedPost, setSelectedPost } = usePostContext();
+    const { selectedPost, setSelectedPost } = useSelectedItemContext();
 
     const initialContent = selectedPost.content;
 

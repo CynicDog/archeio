@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import { usePostContext } from '../Context.jsx';
+import { useSelectedItemContext } from '../Context.jsx';
 
 const PostSummary = ({ post, onPostClick }) => {
 
-    const { setSelectedPost } = usePostContext();
+    const { setSelectedPost } = useSelectedItemContext();
 
     const handlePostClick = () => {
         setSelectedPost(post);

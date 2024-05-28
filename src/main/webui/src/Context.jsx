@@ -17,16 +17,17 @@ export const ThemeProvider = ({children}) => {
     );
 }
 export const useTheme = () => useContext(ThemeContext);
-const PostContext = createContext();
+const SelectedItemContext = createContext();
 
-export const PostProvider = ({ children }) => {
+export const SelectItemProvider = ({ children }) => {
     const [selectedPost, setSelectedPost] = useState(null);
+    const [selectedFolder, setSelectedFolder] = useState({id: 'folder-0'})
 
     return (
-        <PostContext.Provider value={{ selectedPost, setSelectedPost }}>
+        <SelectedItemContext.Provider value={{ selectedPost, setSelectedPost, selectedFolder, setSelectedFolder }}>
             {children}
-        </PostContext.Provider>
+        </SelectedItemContext.Provider>
     );
 };
 
-export const usePostContext = () => useContext(PostContext);
+export const useSelectedItemContext = () => useContext(SelectedItemContext);

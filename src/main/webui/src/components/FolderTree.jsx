@@ -1,21 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {Spinner, TreeView} from '@patternfly/react-core';
-import DarkModeSwitch from "./DarkmodeSwitch.jsx";
 import FolderAdd from "../../public/FolderAdd.jsx";
-import FolderEdit from './FolderEdit.jsx';
 import Folder from "../../public/Folder.jsx";
 import FolderOpened from "../../public/FolderOpened.jsx";
 import {useQuery} from "react-query";
 import {fetchFolders} from "../data/folder.js";
-import {usePostContext} from "../Context.jsx";
+import {useSelectedItemContext} from "../Context.jsx";
 
-export const FolderTree = ({onFolderSelect}) => {
+export const FolderTree = () => {
 
-    const { setSelectedPost } = usePostContext();
+    const { setSelectedPost, setSelectedFolder } = useSelectedItemContext();
 
     const [showFolderInput, setShowFolderInput] = useState(false);
     const [activeItems, setActiveItems] = useState([]);
-    const [selectedFolder, setSelectedFolder] = useState(null);
 
     const {data: folders = [], isLoading: isFolderLoading, refetch: setFolders} = useQuery(
         'folder',
@@ -28,15 +25,6 @@ export const FolderTree = ({onFolderSelect}) => {
     const toggleFolderInput = () => {
         setShowFolderInput(!showFolderInput);
     };
-
-    useEffect(() => {
-        if (activeItems.length > 0) {
-            const parent = findParent(activeItems[0]?.id, folders);
-            setSelectedFolder(parent);
-        } else {
-            setSelectedFolder(null);
-        }
-    }, [activeItems]);
 
     return (
         <div>
@@ -51,14 +39,7 @@ export const FolderTree = ({onFolderSelect}) => {
                         data={folders}
                         activeItems={activeItems}
                         onSelect={(_event, treeViewItem) => {
-                            if (!treeViewItem.children) {
-                                setActiveItems([treeViewItem]);
-                                const parent = folders.find(option => option.children && option.children.some(child => child.id === treeViewItem.id));
-                                onFolderSelect(parent ? parent.name : '', treeViewItem.name, treeViewItem.id);
-                            } else {
-                                onFolderSelect(treeViewItem.name, '', treeViewItem.id);
-                                setSelectedFolder(treeViewItem);
-                            }
+                            setSelectedFolder(treeViewItem);
                             setSelectedPost(null)
                         }}
                         icon={<Folder/>}
@@ -70,7 +51,8 @@ export const FolderTree = ({onFolderSelect}) => {
                     </div>
                 </div>
             )}
-            {showFolderInput && (
+            {/*TODO: move to Breadcrumbs to edit per folder */}
+            {/*{showFolderInput && (
                 <FolderEdit
                     folders={folders}
                     setFolders={setFolders}
@@ -78,7 +60,7 @@ export const FolderTree = ({onFolderSelect}) => {
                     selectedFolder={activeItems[0]?.name === 'All' ? null : selectedFolder}
                     setSelectedFolder={setSelectedFolder}
                 />
-            )}
+            )}*/}
         </div>
     );
 };

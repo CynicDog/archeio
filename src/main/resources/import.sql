@@ -1,6 +1,7 @@
 -- Inserting sample data for folders
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-0'        , 'All'                         , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-1'        , 'Java'                        , 'folder-1');
+
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-1'        , 'Java'                        , NULL);
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-1-1'      , 'JPA'                         , 'folder-1');
 
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-2'        , 'C#'                          , NULL);
@@ -12,6 +13,7 @@ INSERT INTO folders (id, name, parent_id) VALUES ('folder-3'        , 'JS'      
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-4'        , 'Cloud'                       , NULL);
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-1'      , 'Google Cloud Platform'       , 'folder-4');
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-2'      , 'Azure'                       , 'folder-4');
+INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-2-1'    , 'GraphAPI'                    , 'folder-4-2');
 
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-5'        , 'Container & Orchestration'   , NULL);
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-5-1'      , 'Docker'                      , 'folder-5');
@@ -28,7 +30,6 @@ INSERT INTO folders (id, name, parent_id) VALUES ('folder-7-2'      , 'Github Ac
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-8'        , 'Projects'                    , NULL);
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-8-1'      , 'Akouo'                       , 'folder-8');
 INSERT INTO folders (id, name, parent_id) VALUES ('folder-8-2'      , 'Archeio'                     , 'folder-8');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-8-2-1'    , 'aaa'                         , 'folder-8-2');
 
 -- Inserting sample data for posts
 INSERT INTO post (content, views, votes, timestamp, folder_id) VALUES
@@ -70,6 +71,9 @@ Thank you for your interest in the **Awesome Project**! We look forward to colla
   2. ~~sidebar tags get/refetch~~
   3. ~~add new post per child folder~~
   4. delete a post
+  5. post retrieve by tags (on click)
+  6. tags breadcrumbs display
+  7. add folder button move to breadcrumbs
 ', 200, 15, CURRENT_TIMESTAMP, 'folder-8-2'),
                                                                    ('# Dump / Restore from a docker container
 

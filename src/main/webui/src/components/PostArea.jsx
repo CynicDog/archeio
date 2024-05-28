@@ -3,28 +3,28 @@ import PostSummary from "./PostSummary.jsx";
 import Breadcrumbs from "./Breadcrumbs.jsx";
 import {useQuery} from 'react-query';
 import {fetchByFolder, fetchFolders} from '../data/post.js';
-import {usePostContext} from '../Context.jsx';
+import {useSelectedItemContext} from '../Context.jsx';
 import {Spinner} from "@patternfly/react-core";
-import {fetchPostsByTag} from "../data/tag.js";
 
-const PostArea = ({onPostClick, parentDir, childDir, folderId}) => {
+const PostArea = ({onPostClick}) => {
 
-    const { selectedPost } = usePostContext();
+    const { selectedPost, selectedFolder } = useSelectedItemContext();
 
     const {data: posts, isLoading, isError, refetch} = useQuery(
-        [parentDir, childDir],
+        [selectedFolder],
         () => {
 
-            // triggered by clicking tags
+            // TODO
+            /*// triggered by clicking tags
             if (parentDir === 'tags') {
                 return fetchPostsByTag(childDir);
-            }
+            }*/
 
             // triggered by clicking folders
-            if (folderId === 'folder-0') {
+            if (selectedFolder.id === 'folder-0') {
                 return fetchFolders();
             } else {
-                return fetchByFolder(folderId);
+                return fetchByFolder(selectedFolder.id);
             }
         });
 
@@ -38,7 +38,7 @@ const PostArea = ({onPostClick, parentDir, childDir, folderId}) => {
 
     return (
         <>
-            <Breadcrumbs parentDir={parentDir} childDir={childDir} folderId={folderId}/>
+            <Breadcrumbs />
             {isLoading ? (
                 <div className="d-flex justify-content-center">
                     <Spinner/>
