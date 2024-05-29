@@ -85,7 +85,7 @@ const PostInterface = () => {
 
     return (
         <div className="m-1">
-            <div id="editor-container" ref={editorContainerRef} />
+            <div spellCheck="false" id="editor-container" ref={editorContainerRef} />
         </div>
     );
 };
