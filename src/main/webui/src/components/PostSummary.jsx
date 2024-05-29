@@ -2,13 +2,16 @@ import React from 'react';
 import moment from 'moment';
 import { useSelectedItemContext } from '../Context.jsx';
 
-const PostSummary = ({ post, onPostClick }) => {
+const PostSummary = ({ post }) => {
 
-    const { setSelectedPost } = useSelectedItemContext();
+    const { selectedPost, setSelectedPost } = useSelectedItemContext();
 
     const handlePostClick = () => {
-        setSelectedPost(post);
-        onPostClick(post)
+        if (selectedPost && selectedPost.id === post.id) {
+            setSelectedPost(null); // Deselect the post if it is clicked again
+        } else {
+            setSelectedPost(post); // Select the new post
+        }
     };
 
     const handleMenuClick = (event) => {

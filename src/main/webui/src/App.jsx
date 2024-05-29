@@ -9,16 +9,8 @@ import Menu from "../public/Menu.jsx";
 
 const App = () => {
     const {theme} = useTheme();
-    const {selectedPost, setSelectedPost} = useSelectedItemContext();
+    const {selectedPost} = useSelectedItemContext();
     const [isMenuOpen, setIsMenuOpen] = useState(true);
-
-    const handlePostClick = (post) => {
-        if (selectedPost && selectedPost.id === post.id) {
-            setSelectedPost(null); // Deselect the post if it is clicked again
-        } else {
-            setSelectedPost(post); // Select the new post
-        }
-    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -57,16 +49,14 @@ const App = () => {
                 {/* Master view */}
                 <div className={`col-lg-${getMasterViewColWidth()} mb-3`}>
                     <div className="bs-md rounded-3 p-3">
-                        <PostArea onPostClick={handlePostClick}/>
+                        <PostArea />
                     </div>
                 </div>
                 {/* Detail area */}
                 {selectedPost && (
                     <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
                         <div style={{position: 'sticky', top: '30px'}}>
-                            <PostInterface
-                                initialContent={selectedPost.content}
-                                postId={selectedPost.id}/>
+                            <PostInterface />
                         </div>
                     </div>
                 )}

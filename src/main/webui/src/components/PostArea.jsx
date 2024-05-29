@@ -6,7 +6,7 @@ import {fetchByFolder, fetchFolders} from '../data/post.js';
 import {useSelectedItemContext} from '../Context.jsx';
 import {Spinner} from "@patternfly/react-core";
 
-const PostArea = ({onPostClick}) => {
+const PostArea = () => {
 
     const { selectedPost, selectedFolder } = useSelectedItemContext();
 
@@ -45,7 +45,7 @@ const PostArea = ({onPostClick}) => {
                 </div>
             ) : (
                 posts.map(post => (
-                    <PostSummary key={post.id} post={post} onPostClick={onPostClick}/>
+                    <PostSummary key={post.id} post={post} />
                 ))
             )}
         </>
