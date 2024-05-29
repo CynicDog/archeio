@@ -8,7 +8,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/api/tag")
 @Produces(MediaType.APPLICATION_JSON)
-public class TarResource {
+public class TagResource {
 
     @Inject
     TagService tagService;
