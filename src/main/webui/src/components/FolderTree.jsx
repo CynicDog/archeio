@@ -25,7 +25,7 @@ export const FolderTree = () => {
                     <Spinner/>
                 </div>
             ) : (
-                <div className="border rounded-3 p-2 my-3">
+                <div className="border rounded-3 p-2 my-3 overflow-auto">
                     <TreeView
                         hasSelectableNodes
                         data={folders}
