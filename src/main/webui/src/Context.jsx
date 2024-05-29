@@ -21,7 +21,7 @@ const SelectedItemContext = createContext();
 
 export const SelectItemProvider = ({ children }) => {
     const [selectedPost, setSelectedPost] = useState(null);
-    const [selectedFolder, setSelectedFolder] = useState({id: 'folder-0'})
+    const [selectedFolder, setSelectedFolder] = useState({id: 'folder-0', name: 'All'})
 
     return (
         <SelectedItemContext.Provider value={{ selectedPost, setSelectedPost, selectedFolder, setSelectedFolder }}>

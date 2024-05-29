@@ -8,8 +8,10 @@ import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
 
 const App = () => {
+
     const {theme} = useTheme();
     const {selectedPost} = useSelectedItemContext();
+
     const [isMenuOpen, setIsMenuOpen] = useState(true);
 
     const toggleMenu = () => {

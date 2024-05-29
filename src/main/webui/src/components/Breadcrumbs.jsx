@@ -3,9 +3,19 @@ import { useSelectedItemContext } from "../Context.jsx";
 import { savePost } from "../data/post.js";
 import { fetchFolderPath } from "../data/folder.js";
 import {useQuery} from "react-query";
+import React, {useState} from "react";
+import FolderEdit from "./FolderEdit.jsx";
+import FolderAdd from "../../public/FolderAdd.jsx";
+import AddCircle from "../../public/AddCircle.jsx";
 
 const Breadcrumbs = () => {
-    const { setSelectedPost, selectedFolder } = useSelectedItemContext();
+
+    const { setSelectedPost, selectedFolder, setSelectedFolder } = useSelectedItemContext();
+
+    const [showFolderInput, setShowFolderInput] = useState(false);
+    const toggleFolderInput = () => {
+        setShowFolderInput(!showFolderInput);
+    };
 
     const { data: pathData, isLoading, isError } = useQuery(
         ['folderPath', selectedFolder?.id],
@@ -16,7 +26,12 @@ const Breadcrumbs = () => {
     );
 
     const handlePostAdd = async () => {
-        let updatedPost = await savePost({ postId: -1, content: '# Some awesome title', tags: null, folderId: selectedFolder.id });
+        let updatedPost = await savePost({
+            postId: -1,
+            content: '# Some awesome title',
+            tags: null,
+            folderId: selectedFolder.id
+        });
         setSelectedPost(updatedPost);
     };
 
@@ -26,6 +41,20 @@ const Breadcrumbs = () => {
                 <span className="text-body-secondary fs-3 fw-lighter">
                     {pathData}
                 </span>
+                {(selectedFolder?.name !== 'All') && (
+                    <>
+                        <div className="text-secondary btn border border-0 mx-3 my-1" onClick={toggleFolderInput}>
+                            <AddCircle/>
+                        </div>
+                        {showFolderInput && (
+                            <FolderEdit
+                                selectedFolder={selectedFolder}
+                                setSelectedFolder={setSelectedFolder}
+                                setShowFolderInput={setShowFolderInput}
+                            />
+                        )}
+                    </>
+                )}
                 <div className="ms-auto btn border border-0 my-1" onClick={handlePostAdd}>
                     <PostAdd />
                 </div>

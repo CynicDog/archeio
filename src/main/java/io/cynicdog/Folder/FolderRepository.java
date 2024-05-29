@@ -36,6 +36,23 @@ public class FolderRepository {
         }
     }
 
+    public Folder insertFolder(Folder folder) {
+
+        em.createNativeQuery("""
+                    insert into folders (id, name, parent_id)
+                    values (
+                        ?1, ?2, ?3
+                    )
+                    on conflict (id) do nothing 
+                """)
+                .setParameter(1, folder.getId())
+                .setParameter(2, folder.getName())
+                .setParameter(3, folder.getParent() != null ? folder.getParent().getId() : null)
+                .executeUpdate();
+
+        return folder;
+    }
+
     public String findFolderPathById(String folderId) {
         return (String) em.createNativeQuery("""
                        with recursive folder_path as (

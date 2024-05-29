@@ -19,9 +19,23 @@ public class FolderService {
 
     public Folder saveFolder(Folder folder) {
 
-        folder.getChildren().forEach(child -> child.setParent(folder));
+        Folder savedChildWithNullId = null;
 
-        return folderRepository.save(folder);
+        for (Folder child : folder.getChildren()) {
+            if (child.getId() == null) {
+                // set identity with materialized path over folder directories
+                child.setId(folder.getId() + "-" + folder.getChildren().size());
+                child.setParent(folder);
+
+                folderRepository.insertFolder(child);
+                savedChildWithNullId = child;
+            }
+        }
+
+        // Insert the parent folder
+        folderRepository.insertFolder(folder);
+
+        return savedChildWithNullId;
     }
 
     public String findFolderPathById(String folderId) {
