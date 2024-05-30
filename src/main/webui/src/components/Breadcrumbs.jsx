@@ -18,8 +18,14 @@ const Breadcrumbs = () => {
     };
 
     const { data: pathData, isLoading, isError } = useQuery(
-        ['folderPath', selectedFolder?.id],
-        () => fetchFolderPath(selectedFolder?.id),
+        ['folderPath', selectedFolder?.id, selectedFolder?.name],
+        () => {
+            if (selectedFolder.id === 'tags') {
+                return `Tags / ${selectedFolder.name}`;
+            } else {
+                return  fetchFolderPath(selectedFolder?.id);
+            }
+        },
         {
             enabled: !!selectedFolder
         }
@@ -41,7 +47,7 @@ const Breadcrumbs = () => {
                 <span className="text-body-secondary fs-3 fw-lighter">
                     {pathData}
                 </span>
-                {(selectedFolder?.name !== 'All') && (
+                {!((selectedFolder?.name === 'All') || (selectedFolder.id === 'tags')) && (
                     <>
                         <div className="text-secondary btn border border-0 mx-3 my-1" onClick={toggleFolderInput}>
                             <AddCircle/>

@@ -5,6 +5,7 @@ import {useQuery} from 'react-query';
 import {fetchByFolder, fetchFolders} from '../data/post.js';
 import {useSelectedItemContext} from '../Context.jsx';
 import {Spinner} from "@patternfly/react-core";
+import {fetchPostsByTag} from "../data/tag.js";
 
 const PostArea = () => {
 
@@ -13,15 +14,10 @@ const PostArea = () => {
     const {data: posts, isLoading, isError, refetch} = useQuery(
         [selectedFolder],
         () => {
-
-            // TODO
-            /*// triggered by clicking tags
-            if (parentDir === 'tags') {
-                return fetchPostsByTag(childDir);
-            }*/
-
-            // triggered by clicking folders
-            if (selectedFolder.id === 'folder-0') {
+            if (selectedFolder.id === 'tags') {
+                return fetchPostsByTag(selectedFolder.name)
+            }
+            else if (selectedFolder.name === 'All') {
                 return fetchFolders();
             } else {
                 return fetchByFolder(selectedFolder.id);

@@ -4,9 +4,9 @@ import { Spinner } from "@patternfly/react-core";
 import React, {useEffect} from "react";
 import {useSelectedItemContext} from "../Context.jsx";
 
-const TagArea = ({onTagSelect}) => {
+const TagArea = () => {
 
-    const { selectedPost, setSelectedPost } = useSelectedItemContext();
+    const { selectedPost, setSelectedPost, setSelectedFolder } = useSelectedItemContext();
 
     const { data: tags = [], isLoading, isError, refetch } = useQuery(
         'tags',
@@ -33,8 +33,7 @@ const TagArea = ({onTagSelect}) => {
                     <a key={tag.id}
                        className="s-tag m-1"
                        onClick={() => {
-                           /*TODO */
-                           onTagSelect('tags', tag.name, '');
+                           setSelectedFolder({id: 'tags', name: tag.name})
                            setSelectedPost(null);
                        }}>
                         {tag.name}
