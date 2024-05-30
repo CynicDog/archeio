@@ -101,5 +101,49 @@ docker exec -t {CONTAINER_ID} pg_dump --no-owner -U {USERNAME} {DATABASE_NAME} >
 cat {BACKUP_FILE_NAME}.sql | docker exec -i {CONTAINER_ID} psql -U postgres -d {DATABASE_NAME}
 ```
 
-', 200, 15, CURRENT_TIMESTAMP, 'folder-5-1');
+', 200, 15, CURRENT_TIMESTAMP, 'folder-5-1'),
 
+
+('# Github Actions in Action
+
+ GitHub Actions is a CI/CD platform that automates software workflows through customizable tasks and triggers within GitHub repositories.
+
+ ### Introduction to Github Actions
+
+ Github Actions is both the name of the workflow engine and the name of an individual, reusable and easily sharable workflow step within Github.
+
+ **Workflows** are composed of YAML files that are stored in a specific repository location(`.github/workflows`).
+
+ **Triggers** initiate the workflow, and one or more **jobs** are included in the workflow.
+
+ **Jobs** are executed on a workflow runner, which can be a machine or container with an installed runnner service.
+
+ A job is comprised of one or more **steps** that are executed sequentially. A step can take the form of a command line, script, or reusable step that is easily shareable, known as a Github Action.
+
+ Here''s what a workflow specification looks like:
+
+ ```
+ name: My First Workflow
+
+ on:
+   push:
+     branches:
+       - main
+
+ jobs:
+   MyFirstJob:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Hello Github Actions
+         run: echo "Hello Github Actions!"
+
+       - name: Checkout
+         uses: actions/checkout@v4.1.5
+
+       - name: List files in the repository
+         run: |
+           echo "The repository ${{ github.repository }} contains the following files: "
+           tree
+ ```
+'
+, 200, 15, CURRENT_TIMESTAMP, 'folder-7-2'    );
