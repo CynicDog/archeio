@@ -33,7 +33,8 @@ INSERT INTO folders (id, name, parent_id) VALUES ('folder-8-2'      , 'Archeio' 
 
 -- Inserting sample data for posts
 INSERT INTO post (content, views, votes, timestamp, folder_id) VALUES
-                                                                   ('## Contributing
+
+('## Contributing
 
 We welcome contributions from the community! Here are a few ways you can get involved:
 
@@ -62,8 +63,10 @@ If you have any questions, feel free to reach out to us:
 - **GitHub**: [github.com/your-username/awesome-project](https://github.com/your-username/awesome-project)
 
 Thank you for your interest in the **Awesome Project**! We look forward to collaborating with you.', 150, 25, CURRENT_TIMESTAMP, 'folder-0'),
-                                                                   ('## Akouo', 200, 15, CURRENT_TIMESTAMP, 'folder-8-1'),
-                                                                   ('## Archeio
+
+('## Akouo', 200, 15, CURRENT_TIMESTAMP, 'folder-8-1'),
+
+('## Archeio
 
 - TODO
 
@@ -73,10 +76,16 @@ Thank you for your interest in the **Awesome Project**! We look forward to colla
   4. delete a post
   5. post retrieve by tags (on click)
   6. tags breadcrumbs display
-  7. add folder button move to breadcrumbs
-', 200, 15, CURRENT_TIMESTAMP, 'folder-8-2'),
-                                                                   ('# Dump / Restore from a docker container
+  7. ~~add folder button move to breadcrumbs~~
+  8. authentication (Google OAuth2 One Tab or popup)
+  9. text preview for users other than me
+  10. deploy to GKE
+  11. pave connection over cloud sql
+  12. SEO for SPA
 
+', 200, 15, CURRENT_TIMESTAMP, 'folder-8-2'),
+
+('# Dump / Restore from a docker container
 
 
 ### Dump
