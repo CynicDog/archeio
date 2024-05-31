@@ -21,4 +21,4 @@ jobs:
 
     - name: Run PostgreSQL Backup
       run: |
-        docker exec -t $env:CONTAINER_ID pg_dump --no-owner -U quarkus quarkus > psql-backup.sql
+        docker exec -t $env:CONTAINER_ID pg_dump --no-owner -U quarkus quarkus > psql-backup.sql 
