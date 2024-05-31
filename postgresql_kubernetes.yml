@@ -20,7 +20,7 @@ spec:
               protocol: TCP
           env:
             - name: POSTGRES_DB
-              value: akouo
+              value: archeio
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
