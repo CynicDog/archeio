@@ -15,10 +15,10 @@ jobs:
     - name: Get PostgreSQL Container ID
       id: get_container_id
       run: |
-        CONTAINER_ID=$(docker ps -q --filter "ancestor=postgres:14")
-        echo "CONTAINER_ID=$CONTAINER_ID"
-        echo "CONTAINER_ID=$CONTAINER_ID" >> $GITHUB_ENV
+        $CONTAINER_ID = & docker ps -q --filter "ancestor=postgres:14"
+        Write-Host "CONTAINER_ID=$CONTAINER_ID"
+        Set-Content -Path $env:GITHUB_ENV -Value "CONTAINER_ID=$CONTAINER_ID"
 
     - name: Run PostgreSQL Backup
       run: |
-        docker exec -t ${{ env.CONTAINER_ID }} pg_dump --no-owner -U quarkus quarkus > psql-backup.sql
+        docker exec -t $env:CONTAINER_ID pg_dump --no-owner -U quarkus quarkus > psql-backup.sql
