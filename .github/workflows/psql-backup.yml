@@ -2,7 +2,7 @@ name: Backup PostgreSQL Database for window x64 self-hosted runner
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  
+    - cron: '*/30 * * * *'  
 
 jobs:
   backup:
