@@ -6,7 +6,7 @@ on:
 
 jobs:
   backup:
-    runs-on: [self-hosted, linux, ARM64]
+    runs-on: [self-hosted, windows, x64]
 
     steps:
     - name: Check out the repository
