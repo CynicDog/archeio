@@ -12,7 +12,7 @@ export const FolderTree = () => {
     const [activeItems] = useState([]);
 
     const {data: folders = [], isLoading: isFolderLoading} = useQuery(
-        ['folder', selectedFolder.id],
+        ['folder'],
         () => fetchFolders(),
         {
         }

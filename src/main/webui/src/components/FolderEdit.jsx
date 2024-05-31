@@ -33,7 +33,7 @@ const FolderEdit = ({selectedFolder, setSelectedFolder, setShowFolderInput}) => 
         const response = await saveFolder(folderData);
 
         // invalidate query key for fetching folders (thereby effectively refetching)
-        await queryClient.invalidateQueries(['folder', selectedFolder.id]);
+        await queryClient.invalidateQueries(['folder']);
         await queryClient.invalidateQueries(['folderPath', selectedFolder.id]);
 
         setSelectedFolder(response);
