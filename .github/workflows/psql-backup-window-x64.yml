@@ -1,8 +1,8 @@
 name: Backup PostgreSQL Database for window x64 self-hosted runner 
 
 on:
-  schedule:
-    - cron: '*/30 * * * *'  
+  push:
+    branches: master
 
 jobs:
   backup:
