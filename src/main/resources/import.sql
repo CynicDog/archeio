@@ -145,5 +145,40 @@ cat {BACKUP_FILE_NAME}.sql | docker exec -i {CONTAINER_ID} psql -U postgres -d {
            echo "The repository ${{ github.repository }} contains the following files: "
            tree
  ```
+
+ ### Triggers
+
+ There are three types of triggers:
+
+ - - **Webhook triggers**: on events such as
+
+   - ```
+     on: [push, pull_request]
+     ```
+
+     For a complete list of the events that can trigger workflows, please refer to: <https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows>.
+
+
+ - - **Scheduled triggers:** cron jobs specification such as
+
+   - ```
+     on:
+       schedule:
+         # Runs at every 15th minute
+         - cron:  ''*/15 * * * *''
+         # Runs every hour from 9am to 5pm
+         - cron:  ''0 9-17 * * *''
+         # Runs every Friday at midnight
+         - cron:  ''0 0 * * FRI''
+         # Runs every quarter (00:00 on day 1 every 3rd month)
+         - cron:  ''0 0 1 */3 *''
+     ```
+
+ - - **Manual triggers**
+
+   - `workflow_dispatch`
+
+   - `repository_dispatch`
+
 '
 , 200, 15, CURRENT_TIMESTAMP, 'folder-7-2'    );
