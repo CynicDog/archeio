@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 
 // Theme Provider
 const ThemeContext = createContext();
@@ -31,3 +31,33 @@ export const SelectItemProvider = ({ children }) => {
 };
 
 export const useSelectedItemContext = () => useContext(SelectedItemContext);
+
+
+
+// Auth Provider
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+
+    const [auth, setAuth] = useState(false);
+
+    useEffect(() => {
+
+        const isAdmin = document.cookie.split('; ')
+                .find(row => row.startsWith('isAdmin='))?.split('=')[1];
+
+        if (isAdmin === 'true') {
+            setAuth(true);
+        } else {
+            setAuth(false);
+        }
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{auth, setAuth}}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+export const useAuth = () => useContext(AuthContext);

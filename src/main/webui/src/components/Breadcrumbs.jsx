@@ -1,5 +1,5 @@
 import PostAdd from "../../public/PostAdd.jsx";
-import { useSelectedItemContext } from "../Context.jsx";
+import {useAuth, useSelectedItemContext} from "../Context.jsx";
 import { savePost } from "../data/post.js";
 import { fetchFolderPath } from "../data/folder.js";
 import {useQuery} from "react-query";
@@ -9,6 +9,8 @@ import FolderAdd from "../../public/FolderAdd.jsx";
 import AddCircle from "../../public/AddCircle.jsx";
 
 const Breadcrumbs = () => {
+
+    const {auth} = useAuth();
 
     const { setSelectedPost, selectedFolder, setSelectedFolder } = useSelectedItemContext();
 
@@ -47,7 +49,7 @@ const Breadcrumbs = () => {
                 <span className="text-body-secondary fs-3 fw-lighter">
                     {pathData}
                 </span>
-                {!((selectedFolder?.name === 'All') || (selectedFolder.id === 'tags')) && (
+                { auth && !((selectedFolder?.name === 'All') || (selectedFolder.id === 'tags')) && (
                     <>
                         <div className="text-secondary btn border border-0 mx-3 my-1" onClick={toggleFolderInput}>
                             <AddCircle/>
@@ -61,9 +63,11 @@ const Breadcrumbs = () => {
                         )}
                     </>
                 )}
-                <div className="ms-auto btn border border-0 my-1" onClick={handlePostAdd}>
-                    <PostAdd />
-                </div>
+                {auth && (
+                    <div className="ms-auto btn border border-0 my-1" onClick={handlePostAdd}>
+                        <PostAdd />
+                    </div>
+                )}
             </div>
         </div>
     );

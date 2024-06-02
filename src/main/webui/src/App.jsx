@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import PostInterface from "./components/PostInterface.jsx";
 import {FolderTree} from "./components/FolderTree.jsx";
 import DarkModeSwitch from "./components/DarkmodeSwitch.jsx";
-import {useSelectedItemContext, useTheme} from "./Context.jsx";
+import {useAuth, useSelectedItemContext, useTheme} from "./Context.jsx";
 import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
 
 const App = () => {
 
+    const {auth} = useAuth();
     const {theme} = useTheme();
     const {selectedPost} = useSelectedItemContext();
 
