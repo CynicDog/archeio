@@ -21,8 +21,6 @@ public class AdminAPI {
 
         if (adminUUID.equals(uuid)) {
             ctx.response()
-                    .setStatusCode(302)
-                    .putHeader("Location", "/")
                     .addCookie(Cookie.cookie("isAdmin", "true"))
                     .end();
         } else {
