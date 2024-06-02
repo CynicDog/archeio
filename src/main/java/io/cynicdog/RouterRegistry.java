@@ -14,12 +14,14 @@ public class RouterRegistry {
     @Inject
     Vertx vertx;
 
-
-
     static final Logger logger = Logger.getLogger(RouterRegistry.class);
 
     public void init(@Observes Router router,
-                     @ConfigProperty(name="archeio.admin.uuid") String adminUUID) {
+                     @ConfigProperty(name="github.app.client.id") String clientId,
+                     @ConfigProperty(name="github.app.client.secret") String clientSecret,
+                     @ConfigProperty(name="github.app.redirection.url") String redirectionUrl,
+                     @ConfigProperty(name="host") String host,
+                     @ConfigProperty(name="port") int port) {
 
         // register logging filter
         router.route().handler(ctx -> {
@@ -27,8 +29,9 @@ public class RouterRegistry {
             ctx.next();
         });
 
-        var adminAPI = new AdminAPI(vertx, adminUUID);
+        var githubAPI = new GithubAPI(vertx, clientId, clientSecret, redirectionUrl, host, port);
 
-        router.get("/admin/:uuid").handler(adminAPI::grantPermission);
+        router.get("/sign-in").handler(githubAPI::signIn);
+        router.get("/callback").handler(githubAPI::callback);
     }
 }

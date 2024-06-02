@@ -7,11 +7,13 @@ import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
 import {marked} from "marked";
+import Github from "../public/Github.jsx";
+import {Avatar, Label} from "@patternfly/react-core";
 
 
 const App = () => {
 
-    const {auth} = useAuth();
+    const {githubAuthenticated} = useAuth();
     const {theme} = useTheme();
     const {selectedPost} = useSelectedItemContext();
 
@@ -39,36 +41,38 @@ const App = () => {
                             <div className="btn border border-0" onClick={toggleMenu}>
                                 <Menu/>
                             </div>
-                            <div className="mt-1">
-                                <DarkModeSwitch/>
-                            </div>
+                            {isMenuOpen && (
+                                <div className="mt-1">
+                                    <DarkModeSwitch/>
+                                </div>
+                            )}
                         </div>
                         {isMenuOpen && (
-                            <FolderTree />
+                            <FolderTree/>
                         )}
                     </div>
                     <div className="bs-md rounded-3 p-2 mb-3">
-                        <TagArea />
+                        <TagArea/>
                     </div>
                 </div>
                 {/* Master view */}
                 <div className={`col-lg-${getMasterViewColWidth()} mb-3`}>
                     <div className="bs-md rounded-3 p-3">
-                        <PostArea />
+                        <PostArea/>
                     </div>
                 </div>
                 {/* Detail area */}
                 {selectedPost ? (
-                    auth ? (
+                    githubAuthenticated ? (
                         <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
                             <div style={{position: 'sticky', top: '30px'}}>
-                                <PostInterface />
+                                <PostInterface/>
                             </div>
                         </div>
                     ) : (
                         <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
                             <div className="bs-md rounded-3 p-3 px-5" style={{position: 'sticky', top: '30px'}}>
-                                <div dangerouslySetInnerHTML={{ __html: marked.parse(selectedPost.content) }} />
+                                <div dangerouslySetInnerHTML={{__html: marked.parse(selectedPost.content)}}/>
                             </div>
                         </div>
                     )

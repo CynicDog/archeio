@@ -1,17 +1,18 @@
-import PostAdd from "../../public/PostAdd.jsx";
-import {useAuth, useSelectedItemContext} from "../Context.jsx";
-import { savePost } from "../data/post.js";
-import { fetchFolderPath } from "../data/folder.js";
-import {useQuery} from "react-query";
-import React, {useState} from "react";
-import FolderEdit from "./FolderEdit.jsx";
-import FolderAdd from "../../public/FolderAdd.jsx";
-import AddCircle from "../../public/AddCircle.jsx";
+import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import { Avatar, Label } from '@patternfly/react-core';
+import PostAdd from '../../public/PostAdd.jsx';
+import { useAuth, useSelectedItemContext } from '../Context.jsx';
+import { savePost } from '../data/post.js';
+import { fetchFolderPath } from '../data/folder.js';
+import FolderEdit from './FolderEdit.jsx';
+import FolderAdd from '../../public/FolderAdd.jsx';
+import AddCircle from '../../public/AddCircle.jsx';
+import Github from '../../public/Github.jsx';
+import GithubAuthLabel from './GithubAuthLabel.jsx';
 
 const Breadcrumbs = () => {
-
-    const {auth} = useAuth();
-
+    const { githubAuthenticated } = useAuth();
     const { setSelectedPost, selectedFolder, setSelectedFolder } = useSelectedItemContext();
 
     const [showFolderInput, setShowFolderInput] = useState(false);
@@ -25,7 +26,7 @@ const Breadcrumbs = () => {
             if (selectedFolder.id === 'tags') {
                 return `Tags / ${selectedFolder.name}`;
             } else {
-                return  fetchFolderPath(selectedFolder?.id);
+                return fetchFolderPath(selectedFolder?.id);
             }
         },
         {
@@ -49,10 +50,10 @@ const Breadcrumbs = () => {
                 <span className="text-body-secondary fs-3 fw-lighter">
                     {pathData}
                 </span>
-                { auth && !((selectedFolder?.name === 'All') || (selectedFolder.id === 'tags')) && (
+                {githubAuthenticated && !((selectedFolder?.name === 'All') || (selectedFolder.id === 'tags')) && (
                     <>
                         <div className="text-secondary btn border border-0 mx-3 my-1" onClick={toggleFolderInput}>
-                            <AddCircle/>
+                            <AddCircle />
                         </div>
                         {showFolderInput && (
                             <FolderEdit
@@ -63,8 +64,9 @@ const Breadcrumbs = () => {
                         )}
                     </>
                 )}
-                {auth && (
-                    <div className="ms-auto btn border border-0 my-1" onClick={handlePostAdd}>
+                <GithubAuthLabel />
+                {githubAuthenticated && (
+                    <div className=" btn border border-0 my-1" onClick={handlePostAdd}>
                         <PostAdd />
                     </div>
                 )}

@@ -1,4 +1,9 @@
 import {createContext, useContext, useEffect, useState} from "react";
+import {
+    getGithubAccessTokenFromCookie, getGithubAvatarFromCookie,
+    getGithubUsernameFromCookie,
+    removeGithubAccessTokenCookie, removeGithubAvatarCookie, removeGithubUsernameCookie
+} from "./module/cookie.js";
 
 // Theme Provider
 const ThemeContext = createContext();
@@ -39,22 +44,52 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const [auth, setAuth] = useState(false);
+    const [githubAuthenticated, setGithubAuthenticated] = useState(null);
+    const [githubUsername, setGithubUsername] = useState(null);
+    const [githubAvatar, setGithubAvatar] = useState(null);
 
     useEffect(() => {
 
-        const isAdmin = document.cookie.split('; ')
-                .find(row => row.startsWith('isAdmin='))?.split('=')[1];
+        const githubAccessToken = getGithubAccessTokenFromCookie();
+        if (githubAccessToken !== null) {
+            sessionStorage.setItem("ACCESS_TOKEN", githubAccessToken);
+            setGithubAuthenticated(true);
+        }
 
-        if (isAdmin === 'true') {
-            setAuth(true);
-        } else {
-            setAuth(false);
+        const githubUsername = getGithubUsernameFromCookie();
+        if (githubUsername !== null) {
+            setGithubUsername(githubUsername);
+        }
+
+        const githubAvatar = getGithubAvatarFromCookie();
+        if (githubAvatar !== null) {
+            setGithubAvatar(githubAvatar);
         }
     }, []);
 
+    // TODO: empty state on sign out status
+    const handleGithubSignOut = () => {
+
+        sessionStorage.removeItem("ACCESS_TOKEN");
+
+        removeGithubAccessTokenCookie();
+        removeGithubUsernameCookie();
+        removeGithubAvatarCookie();
+
+        setGithubAuthenticated(null);
+        setGithubUsername(null);
+        setGithubAvatar(null);
+    };
+
     return (
-        <AuthContext.Provider value={{auth, setAuth}}>
+        <AuthContext.Provider value={{
+            githubAuthenticated,
+            setGithubAuthenticated,
+            githubUsername,
+            setGithubUsername,
+            githubAvatar,
+            handleGithubSignOut
+        }}>
             {children}
         </AuthContext.Provider>
     )
