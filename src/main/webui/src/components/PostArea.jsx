@@ -9,7 +9,7 @@ import {fetchPostsByTag} from "../data/tag.js";
 
 const PostArea = () => {
 
-    const { selectedPost, selectedFolder } = useSelectedItemContext();
+    const { selectedFolder } = useSelectedItemContext();
 
     const {data: posts, isLoading, isError, refetch} = useQuery(
         [selectedFolder],
@@ -24,17 +24,11 @@ const PostArea = () => {
             }
         });
 
-    useEffect(() => {
-        if (selectedPost) {
-            refetch();
-        }
-    }, [selectedPost, refetch]);
-
     if (isError) return <p>Error fetching posts</p>;
 
     return (
         <>
-            <Breadcrumbs />
+            <Breadcrumbs postRefetch={refetch}/>
             {isLoading ? (
                 <div className="d-flex justify-content-center">
                     <Spinner/>

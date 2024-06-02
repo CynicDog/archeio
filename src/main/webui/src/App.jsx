@@ -7,9 +7,6 @@ import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
 import {marked} from "marked";
-import Github from "../public/Github.jsx";
-import {Avatar, Label} from "@patternfly/react-core";
-
 
 const App = () => {
 
@@ -58,7 +55,7 @@ const App = () => {
                 {/* Master view */}
                 <div className={`col-lg-${getMasterViewColWidth()} mb-3`}>
                     <div className="bs-md rounded-3 p-3">
-                        <PostArea/>
+                        <PostArea />
                     </div>
                 </div>
                 {/* Detail area */}

@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Avatar, Label } from '@patternfly/react-core';
 import PostAdd from '../../public/PostAdd.jsx';
 import { useAuth, useSelectedItemContext } from '../Context.jsx';
 import { savePost } from '../data/post.js';
 import { fetchFolderPath } from '../data/folder.js';
 import FolderEdit from './FolderEdit.jsx';
-import FolderAdd from '../../public/FolderAdd.jsx';
 import AddCircle from '../../public/AddCircle.jsx';
-import Github from '../../public/Github.jsx';
 import GithubAuthLabel from './GithubAuthLabel.jsx';
 
-const Breadcrumbs = () => {
+const Breadcrumbs = ({postRefetch}) => {
     const { githubAuthenticated } = useAuth();
-    const { setSelectedPost, selectedFolder, setSelectedFolder } = useSelectedItemContext();
+    const { selectedFolder, setSelectedFolder } = useSelectedItemContext();
 
     const [showFolderInput, setShowFolderInput] = useState(false);
     const toggleFolderInput = () => {
         setShowFolderInput(!showFolderInput);
     };
 
-    const { data: pathData, isLoading, isError } = useQuery(
+    const { data: pathData } = useQuery(
         ['folderPath', selectedFolder?.id, selectedFolder?.name],
         () => {
             if (selectedFolder.id === 'tags') {
@@ -41,7 +38,8 @@ const Breadcrumbs = () => {
             tags: null,
             folderId: selectedFolder.id
         });
-        setSelectedPost(updatedPost);
+
+        postRefetch();
     };
 
     return (
