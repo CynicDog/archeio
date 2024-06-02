@@ -6,6 +6,8 @@ import {useAuth, useSelectedItemContext, useTheme} from "./Context.jsx";
 import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
+import {marked} from "marked";
+
 
 const App = () => {
 
@@ -56,13 +58,21 @@ const App = () => {
                     </div>
                 </div>
                 {/* Detail area */}
-                {selectedPost && (
-                    <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
-                        <div style={{position: 'sticky', top: '30px'}}>
-                            <PostInterface />
+                {selectedPost ? (
+                    auth ? (
+                        <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
+                            <div style={{position: 'sticky', top: '30px'}}>
+                                <PostInterface />
+                            </div>
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
+                            <div className="bs-md rounded-3 p-3 px-5" style={{position: 'sticky', top: '30px'}}>
+                                <div dangerouslySetInnerHTML={{ __html: marked.parse(selectedPost.content) }} />
+                            </div>
+                        </div>
+                    )
+                ) : null}
             </div>
         </div>
     );
