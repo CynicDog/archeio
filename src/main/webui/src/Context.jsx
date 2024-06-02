@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useState} from "react";
+import {createContext, useContext, useState} from "react";
 
 // Theme Provider
 const ThemeContext = createContext();
@@ -17,8 +17,6 @@ export const ThemeProvider = ({children}) => {
     );
 }
 export const useTheme = () => useContext(ThemeContext);
-
-// Selected Item Provider
 const SelectedItemContext = createContext();
 
 export const SelectItemProvider = ({ children }) => {

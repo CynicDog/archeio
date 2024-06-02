@@ -1,7 +1,6 @@
 package io.cynicdog.Folder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.cynicdog.User.User;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -24,11 +23,6 @@ public class Folder {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("id asc")
     private Set<Folder> children = new HashSet<>();
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User owner;
 
     public Folder() {
     }
@@ -67,13 +61,5 @@ public class Folder {
 
     public void addSubFolders(Folder subFolder) {
         this.children.add(subFolder);
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 }
