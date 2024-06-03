@@ -64,15 +64,17 @@ public class GithubAPI {
     public void callback(RoutingContext ctx) {
         String code = ctx.request().getParam("code");
         String state = ctx.request().getParam("state");
-        String storedState = ctx.request().getCookie(stateKey).getValue();
 
-        if (state == null || !state.equals(storedState)) {
-            ctx.response()
-                    .putHeader("Location", "/#state_mismatch")
-                    .setStatusCode(302)
-                    .end();
-        } else {
-            ctx.response().removeCookie(stateKey);
+//         String storedState = ctx.request().getCookie(stateKey).getValue();
+
+//        if (state == null || !state.equals(storedState)) {
+//            ctx.response()
+//                    .putHeader("Location", "/#state_mismatch")
+//                    .setStatusCode(302)
+//                    .end();
+//        }
+//        else {
+//            ctx.response().removeCookie(stateKey);
 
             WebClient client = WebClient.create(ctx.vertx());
 
@@ -80,7 +82,7 @@ public class GithubAPI {
             tokenFuture
                     .thenAccept(result -> handleTokenSuccess(ctx, client, result))
                     .exceptionally(ex -> handleTokenFailure(ctx, ex));
-        }
+//        }
     }
 
     private CompletableFuture<JsonObject> getGithubAccessToken(WebClient client, String code) {
