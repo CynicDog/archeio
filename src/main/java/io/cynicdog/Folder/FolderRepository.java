@@ -3,6 +3,7 @@ package io.cynicdog.Folder;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
 import java.util.List;
@@ -23,8 +24,23 @@ public class FolderRepository {
                 .getResultList();
     }
 
-    public Optional<Folder> findById(String folderId) {
-        return Optional.ofNullable(em.find(Folder.class, folderId));
+    public Optional<Folder> findById(String username, String folderId) {
+        try {
+            Folder folder = em.createQuery(
+                            """
+                            select f 
+                            from Folder f 
+                            where f.user.username = :username
+                              and f.id = :folderId 
+                            """
+                            , Folder.class)
+                    .setParameter("username", username)
+                    .setParameter("folderId", folderId)
+                    .getSingleResult();
+            return Optional.of(folder);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     public Folder save(Folder folder) {

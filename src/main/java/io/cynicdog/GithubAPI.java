@@ -129,27 +129,22 @@ public class GithubAPI {
         var userInfoFuture = getGithubUserInfo(client, accessToken);
         userInfoFuture.thenAccept(userInfo -> {
 
-            logger.info(userInfo.encodePrettily());
-
             String githubUserId = userInfo.getString("id");
             String githubUsername = userInfo.getString("login");
             String githubAvatar = userInfo.getString("avatar_url");
 
+            // internal request to populate User table for the first sign-in
             WebClient.create(ctx.vertx())
-                    .post(port, host, "/user/sign-in?type=github")
-                    .sendJsonObject(new JsonObject()
-                            .put("userId", githubUserId)
-                            .put("username", githubUsername)
-                            .put("avatar_url", githubAvatar));
-
-            logger.info(userInfo.encodePrettily());
+                    .post(port, host, "/user/sign-in")
+                    .sendJsonObject(
+                            new JsonObject().put("username", githubUsername)
+                    );
 
             ctx.response()
                     .setStatusCode(302)
-                    .putHeader("Location", "/")
+                    .putHeader("Location", "/" + githubUsername)
                     .addCookie(Cookie.cookie("access_token", accessToken))
                     .addCookie(Cookie.cookie("github_username", githubUsername.replaceAll("\\s", "_")))
-                    .addCookie(Cookie.cookie("github_user_id", githubUserId))
                     .addCookie(Cookie.cookie("github_avatar", githubAvatar))
                     .end();
 

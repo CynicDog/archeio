@@ -1,38 +1,41 @@
+-- Inserting sample data for users
+INSERT INTO users (username) VALUES ('CynicDog');
+
 -- Inserting sample data for folders
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-0'        , 'All'                         , NULL);
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-0'        , 'All'                         , NULL,          'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-1'        , 'Java'                        , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-1-1'      , 'JPA'                         , 'folder-1');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-1'        , 'Java'                        , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-1-1'      , 'JPA'                         , 'folder-1',    'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-2'        , 'C#'                          , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-2-1'      , 'Orleans'                     , 'folder-2');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-2-2'      , 'Entity Framework'            , 'folder-2');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-2'        , 'C#'                          , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-2-1'      , 'Orleans'                     , 'folder-2',    'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-2-2'      , 'Entity Framework'            , 'folder-2',    'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-3'        , 'JS'                          , NULL);
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-3'        , 'JS'                          , NULL,          'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-4'        , 'Cloud'                       , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-1'      , 'Google Cloud Platform'       , 'folder-4');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-2'      , 'Azure'                       , 'folder-4');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-4-2-1'    , 'GraphAPI'                    , 'folder-4-2');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4'        , 'Cloud'                       , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4-1'      , 'Google Cloud Platform'       , 'folder-4',    'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4-2'      , 'Azure'                       , 'folder-4',    'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4-2-1'    , 'GraphAPI'                    , 'folder-4-2',  'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-5'        , 'Container & Orchestration'   , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-5-1'      , 'Docker'                      , 'folder-5');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-5-2'      , 'k8s'                         , 'folder-5');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-5'        , 'Container & Orchestration'   , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-5-1'      , 'Docker'                      , 'folder-5',    'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-5-2'      , 'k8s'                         , 'folder-5',    'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-6'        , 'Database'                    , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-6-1'      , 'PostgreSQL'                  , 'folder-6');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-6-2'      , 'SQL Server'                  , 'folder-6');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-6'        , 'Database'                    , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-6-1'      , 'PostgreSQL'                  , 'folder-6',    'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-6-2'      , 'SQL Server'                  , 'folder-6',    'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-7'        , 'Certificates'                , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-7-1'      , 'CKA'                         , 'folder-7');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-7-2'      , 'Github Actions'              , 'folder-7');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-7'        , 'Certificates'                , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-7-1'      , 'CKA'                         , 'folder-7',    'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-7-2'      , 'Github Actions'              , 'folder-7',    'CynicDog');
 
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-8'        , 'Projects'                    , NULL);
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-8-1'      , 'Akouo'                       , 'folder-8');
-INSERT INTO folders (id, name, parent_id) VALUES ('folder-8-2'      , 'Archeio'                     , 'folder-8');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-8'        , 'Projects'                    , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-8-1'      , 'Akouo'                       , 'folder-8',    'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-8-2'      , 'Archeio'                     , 'folder-8',    'CynicDog');
 
 -- Inserting sample data for posts
-INSERT INTO post (content, views, votes, timestamp, folder_id) VALUES
+INSERT INTO post (content, views, votes, timestamp, folder_id, user_username) VALUES
 
 ('## Contributing
 
@@ -62,9 +65,9 @@ If you have any questions, feel free to reach out to us:
 
 - **GitHub**: [github.com/your-username/awesome-project](https://github.com/your-username/awesome-project)
 
-Thank you for your interest in the **Awesome Project**! We look forward to collaborating with you.', 150, 25, CURRENT_TIMESTAMP, 'folder-0'),
+Thank you for your interest in the **Awesome Project**! We look forward to collaborating with you.', 150, 25, CURRENT_TIMESTAMP, 'folder-0', 'CynicDog'),
 
-('## Akouo', 200, 15, CURRENT_TIMESTAMP, 'folder-8-1'),
+('## Akouo', 200, 15, CURRENT_TIMESTAMP, 'folder-8-1', 'CynicDog'),
 
 ('## Archeio
 
@@ -83,7 +86,7 @@ Thank you for your interest in the **Awesome Project**! We look forward to colla
   11. pave connection over cloud sql
   12. SEO for SPA
 
-', 200, 15, CURRENT_TIMESTAMP, 'folder-8-2'),
+', 200, 15, CURRENT_TIMESTAMP, 'folder-8-2', 'CynicDog'),
 
 ('# Dump / Restore from a docker container
 
@@ -101,84 +104,4 @@ docker exec -t {CONTAINER_ID} pg_dump --no-owner -U {USERNAME} {DATABASE_NAME} >
 cat {BACKUP_FILE_NAME}.sql | docker exec -i {CONTAINER_ID} psql -U postgres -d {DATABASE_NAME}
 ```
 
-', 200, 15, CURRENT_TIMESTAMP, 'folder-5-1'),
-
-
-('# Github Actions in Action
-
- GitHub Actions is a CI/CD platform that automates software workflows through customizable tasks and triggers within GitHub repositories.
-
- ### Introduction to Github Actions
-
- Github Actions is both the name of the workflow engine and the name of an individual, reusable and easily sharable workflow step within Github.
-
- **Workflows** are composed of YAML files that are stored in a specific repository location(`.github/workflows`).
-
- **Triggers** initiate the workflow, and one or more **jobs** are included in the workflow.
-
- **Jobs** are executed on a workflow runner, which can be a machine or container with an installed runnner service.
-
- A job is comprised of one or more **steps** that are executed sequentially. A step can take the form of a command line, script, or reusable step that is easily shareable, known as a Github Action.
-
- Here''s what a workflow specification looks like:
-
- ```
- name: My First Workflow
-
- on:
-   push:
-     branches:
-       - main
-
- jobs:
-   MyFirstJob:
-     runs-on: ubuntu-latest
-     steps:
-       - name: Hello Github Actions
-         run: echo "Hello Github Actions!"
-
-       - name: Checkout
-         uses: actions/checkout@v4.1.5
-
-       - name: List files in the repository
-         run: |
-           echo "The repository ${{ github.repository }} contains the following files: "
-           tree
- ```
-
- ### Triggers
-
- There are three types of triggers:
-
- - - **Webhook triggers**: on events such as
-
-   - ```
-     on: [push, pull_request]
-     ```
-
-     For a complete list of the events that can trigger workflows, please refer to: <https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows>.
-
-
- - - **Scheduled triggers:** cron jobs specification such as
-
-   - ```
-     on:
-       schedule:
-         # Runs at every 15th minute
-         - cron:  ''*/15 * * * *''
-         # Runs every hour from 9am to 5pm
-         - cron:  ''0 9-17 * * *''
-         # Runs every Friday at midnight
-         - cron:  ''0 0 * * FRI''
-         # Runs every quarter (00:00 on day 1 every 3rd month)
-         - cron:  ''0 0 1 */3 *''
-     ```
-
- - - **Manual triggers**
-
-   - `workflow_dispatch`
-
-   - `repository_dispatch`
-
-'
-, 200, 15, CURRENT_TIMESTAMP, 'folder-7-2'    );
+', 200, 15, CURRENT_TIMESTAMP, 'folder-5-1', 'CynicDog');

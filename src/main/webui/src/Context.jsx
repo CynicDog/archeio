@@ -79,6 +79,8 @@ export const AuthProvider = ({ children }) => {
         setGithubAuthenticated(null);
         setGithubUsername(null);
         setGithubAvatar(null);
+
+        window.location.href= '/';
     };
 
     return (

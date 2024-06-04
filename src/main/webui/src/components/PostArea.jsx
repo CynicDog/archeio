@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PostSummary from "./PostSummary.jsx";
 import Breadcrumbs from "./Breadcrumbs.jsx";
 import {useQuery} from 'react-query';
-import {fetchByFolder, fetchFolders} from '../data/post.js';
+import {fetchByFolder, fetchPosts} from '../data/post.js';
 import {useSelectedItemContext} from '../Context.jsx';
 import {Spinner} from "@patternfly/react-core";
 import {fetchPostsByTag} from "../data/tag.js";
@@ -18,7 +18,7 @@ const PostArea = () => {
                 return fetchPostsByTag(selectedFolder.name)
             }
             else if (selectedFolder.name === 'All') {
-                return fetchFolders();
+                return fetchPosts();
             } else {
                 return fetchByFolder(selectedFolder.id);
             }

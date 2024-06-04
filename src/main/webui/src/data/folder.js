@@ -1,3 +1,5 @@
+// TODO: user domain integration
+
 export const fetchFolderPath = async (folderId) => {
     const response = await fetch(`/api/folder/${folderId}/path`);
     return await response.text();
