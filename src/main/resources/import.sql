@@ -1,38 +1,40 @@
 -- Inserting sample data for users
-INSERT INTO users (username) VALUES ('CynicDog');
+INSERT INTO users (username, createdAt) VALUES ('CynicDog', current_timestamp);
 
 -- Inserting sample data for folders
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-0'        , 'All'                         , NULL,          'CynicDog');
+INSERT INTO folders (id, name, parent_id, user_username, createdAt) VALUES
+('folder-0', 'All', NULL, 'CynicDog', '2024-06-01 00:00:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-1'        , 'Java'                        , NULL,          'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-1-1'      , 'JPA'                         , 'folder-1',    'CynicDog');
+('folder-1', 'Java', NULL, 'CynicDog', '2024-06-01 00:01:00'),
+('folder-1-1', 'JPA', 'folder-1', 'CynicDog', '2024-06-01 00:02:00'),
+('folder-1-1-1', 'Hibernate', 'folder-1-1', 'CynicDog', '2024-06-01 00:23:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-2'        , 'C#'                          , NULL,          'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-2-1'      , 'Orleans'                     , 'folder-2',    'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-2-2'      , 'Entity Framework'            , 'folder-2',    'CynicDog');
+('folder-2', 'C#', NULL, 'CynicDog', '2024-06-01 00:03:00'),
+('folder-2-1', 'Orleans', 'folder-2', 'CynicDog', '2024-06-01 00:04:00'),
+('folder-2-2', 'Entity Framework', 'folder-2', 'CynicDog', '2024-06-01 00:05:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-3'        , 'JS'                          , NULL,          'CynicDog');
+('folder-3', 'JS', NULL, 'CynicDog', '2024-06-01 00:06:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4'        , 'Cloud'                       , NULL,          'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4-1'      , 'Google Cloud Platform'       , 'folder-4',    'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4-2'      , 'Azure'                       , 'folder-4',    'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-4-2-1'    , 'GraphAPI'                    , 'folder-4-2',  'CynicDog');
+('folder-4', 'Cloud', NULL, 'CynicDog', '2024-06-01 00:07:00'),
+('folder-4-1', 'Google Cloud Platform', 'folder-4', 'CynicDog', '2024-06-01 00:08:00'),
+('folder-4-2', 'Azure', 'folder-4', 'CynicDog', '2024-06-01 00:09:00'),
+('folder-4-2-1', 'GraphAPI', 'folder-4-2', 'CynicDog', '2024-06-01 00:10:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-5'        , 'Container & Orchestration'   , NULL,          'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-5-1'      , 'Docker'                      , 'folder-5',    'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-5-2'      , 'k8s'                         , 'folder-5',    'CynicDog');
+('folder-5', 'Container & Orchestration', NULL, 'CynicDog', '2024-06-01 00:11:00'),
+('folder-5-1', 'Docker', 'folder-5', 'CynicDog', '2024-06-01 00:12:00'),
+('folder-5-2', 'k8s', 'folder-5', 'CynicDog', '2024-06-01 00:13:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-6'        , 'Database'                    , NULL,          'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-6-1'      , 'PostgreSQL'                  , 'folder-6',    'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-6-2'      , 'SQL Server'                  , 'folder-6',    'CynicDog');
+('folder-6', 'Database', NULL, 'CynicDog', '2024-06-01 00:14:00'),
+('folder-6-1', 'PostgreSQL', 'folder-6', 'CynicDog', '2024-06-01 00:15:00'),
+('folder-6-2', 'SQL Server', 'folder-6', 'CynicDog', '2024-06-01 00:16:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-7'        , 'Certificates'                , NULL,          'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-7-1'      , 'CKA'                         , 'folder-7',    'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-7-2'      , 'Github Actions'              , 'folder-7',    'CynicDog');
+('folder-7', 'Certificates', NULL, 'CynicDog', '2024-06-01 00:17:00'),
+('folder-7-1', 'CKA', 'folder-7', 'CynicDog', '2024-06-01 00:18:00'),
+('folder-7-2', 'Github Actions', 'folder-7', 'CynicDog', '2024-06-01 00:19:00'),
 
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-8'        , 'Projects'                    , NULL,          'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-8-1'      , 'Akouo'                       , 'folder-8',    'CynicDog');
-INSERT INTO folders (id, name, parent_id, user_username) VALUES ('folder-8-2'      , 'Archeio'                     , 'folder-8',    'CynicDog');
+('folder-8', 'Projects', NULL, 'CynicDog', '2024-06-01 00:20:00'),
+('folder-8-1', 'Akouo', 'folder-8', 'CynicDog', '2024-06-01 00:21:00'),
+('folder-8-2', 'Archeio', 'folder-8', 'CynicDog', '2024-06-01 00:22:00');
 
 -- Inserting sample data for posts
 INSERT INTO post (content, views, votes, timestamp, folder_id, user_username) VALUES

@@ -6,56 +6,62 @@ const FolderEdit = ({selectedFolder, setSelectedFolder, setShowFolderInput}) => 
 
     const queryClient = useQueryClient();
 
-    const [newChild, setNewChild] = useState('');
+    const [newFolder, setNewFolder] = useState('');
 
-    const handleChildNameChange = (event) => {
-        setNewChild(event.target.value);
+    const handleNewFolderNameChange = (event) => {
+        setNewFolder(event.target.value);
     };
 
-    const handleSaveFolders = async () => {
-        if (newChild.trim() === '') {
+    const handleCreateFolder = async () => {
+        if (newFolder.trim() === '') {
             return;
         }
 
-        const folderData = {
-            name: selectedFolder.name,
-            id: selectedFolder.id,
-            children: [
-                ...(Array.isArray(selectedFolder.children) ? selectedFolder.children : []),
-                {
-                    name: newChild,
-                    id: null,
-                    children: []
-                }
-            ]
-        };
+        const folderData = selectedFolder
+            ? {
+                name: selectedFolder.name,
+                id: selectedFolder.id,
+                children: [
+                    ...(Array.isArray(selectedFolder.children) ? selectedFolder.children : []),
+                    {
+                        name: newFolder,
+                        id: null,
+                        children: []
+                    }
+                ]
+            }
+            : {
+                name: newFolder,
+                id: null,
+                children: []
+            };
 
         const response = await saveFolder(folderData);
 
         // invalidate query key for fetching folders (thereby effectively refetching)
         await queryClient.invalidateQueries(['folder']);
-        await queryClient.invalidateQueries(['folderPath', selectedFolder.id]);
+        if (selectedFolder) {
+            await queryClient.invalidateQueries(['folderPath', selectedFolder.id]);
+        }
 
         setSelectedFolder(response);
-
-        setNewChild('');
+        setNewFolder('');
         setShowFolderInput(false);
     };
 
     return (
-
-        <div className="d-flex align-items-center ">
+        <div className="d-flex align-items-center">
             <input
                 className="s-input"
                 id="folder-name-input"
                 type="text"
                 placeholder="Enter folder name"
-                value={newChild}
-                onChange={(event) => handleChildNameChange(event)}/>
+                value={newFolder}
+                onChange={handleNewFolderNameChange} />
             <div
                 className="s-btn s-btn__xs mx-2"
-                aria-disabled={(newChild === '')}
-                onClick={handleSaveFolders}>
+                aria-disabled={newFolder === ''}
+                onClick={handleCreateFolder} >
                 Create
             </div>
         </div>

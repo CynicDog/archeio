@@ -21,7 +21,7 @@ public class FolderRepository {
                     from Folder f 
                     where f.parent is null
                       and f.user.username = :username 
-                    order by f.id
+                    order by f.createdAt
                 """, Folder.class)
                 .setParameter("username", username)
                 .getResultList();
@@ -58,9 +58,9 @@ public class FolderRepository {
     public Folder insertFolder(Folder folder) {
 
         em.createNativeQuery("""
-                    insert into folders (id, name, parent_id, user_username)
+                    insert into folders (id, name, parent_id, user_username, createdat)
                     values (
-                        ?1, ?2, ?3, ?4
+                        ?1, ?2, ?3, ?4, ?5
                     )
                     on conflict (id) do nothing 
                 """)
@@ -68,6 +68,7 @@ public class FolderRepository {
                 .setParameter(2, folder.getName())
                 .setParameter(3, folder.getParent() != null ? folder.getParent().getId() : null)
                 .setParameter(4, folder.getUser().getUsername())
+                .setParameter(5, folder.getCreatedAt())
                 .executeUpdate();
 
         return folder;

@@ -3,7 +3,10 @@ package io.cynicdog.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.cynicdog.User.User;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +31,16 @@ public class Folder {
     @ManyToOne
     @JsonIgnore
     private User user;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    // TODO configure composite primary key over materialized folder path and username
+    // @Embeddable
+    static class compositePrimaryKeys implements Serializable {
+        private String id;
+        private String username;
+    }
 
     public Folder() {
     }
@@ -74,5 +87,13 @@ public class Folder {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

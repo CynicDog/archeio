@@ -5,6 +5,7 @@ import io.cynicdog.User.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class FolderService {
 
     public Folder saveFolder(String username, Folder folder) {
 
-        Folder savedChildWithNullId = null;
+        Folder returnFolder = null;
 
         User user = userRepository.findByUsername(username).orElseGet(() -> new User(username));
 
@@ -34,17 +35,27 @@ public class FolderService {
                 child.setId(folder.getId() + "-" + folder.getChildren().size());
                 child.setParent(folder);
                 child.setUser(user);
+                child.setCreatedAt(LocalDateTime.now());
 
                 folderRepository.insertFolder(child);
-                savedChildWithNullId = child;
+                returnFolder = child;
             }
         }
 
         // Insert the parent folder
         folder.setUser(user);
+
+        if (folder.getId() == null) {
+            // retrieve the root level folders length as inserted folder's id
+            folder.setId("folder" + "-" + findAllFolders(username).size());
+            folder.setCreatedAt(LocalDateTime.now());
+
+            returnFolder = folder;
+        }
+
         folderRepository.insertFolder(folder);
 
-        return savedChildWithNullId;
+        return returnFolder;
     }
 
     public String findFolderPathById(String username, String folderId) {
