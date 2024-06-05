@@ -1,4 +1,5 @@
-const username = window.location.pathname.split('/')[1];
+// default user page as 'CynicDog'
+const username = window.location.pathname.split('/')[1] || 'CynicDog';
 
 export const fetchFolderPath = async (folderId) => {
     const response = await fetch(`/api/folder/${username}/${folderId}/path`);
