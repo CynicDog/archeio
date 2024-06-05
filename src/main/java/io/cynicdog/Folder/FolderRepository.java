@@ -15,12 +15,15 @@ public class FolderRepository {
     @Inject
     private EntityManager em;
 
-    public List<Folder> findAllFolders() {
+    public List<Folder> findAllFolders(String username) {
         return em.createQuery("""
                     select f 
                     from Folder f 
-                    where f.parent is null order by f.id
+                    where f.parent is null
+                      and f.user.username = :username 
+                    order by f.id
                 """, Folder.class)
+                .setParameter("username", username)
                 .getResultList();
     }
 
@@ -55,26 +58,28 @@ public class FolderRepository {
     public Folder insertFolder(Folder folder) {
 
         em.createNativeQuery("""
-                    insert into folders (id, name, parent_id)
+                    insert into folders (id, name, parent_id, user_username)
                     values (
-                        ?1, ?2, ?3
+                        ?1, ?2, ?3, ?4
                     )
                     on conflict (id) do nothing 
                 """)
                 .setParameter(1, folder.getId())
                 .setParameter(2, folder.getName())
                 .setParameter(3, folder.getParent() != null ? folder.getParent().getId() : null)
+                .setParameter(4, folder.getUser().getUsername())
                 .executeUpdate();
 
         return folder;
     }
 
-    public String findFolderPathById(String folderId) {
+    public String findFolderPathById(String username, String folderId) {
         return (String) em.createNativeQuery("""
                        with recursive folder_path as (
                             select id, cast(name as text) as name, parent_id, cast(name as text) as full_path
                             from folders 
                             where id = ?1
+                              and user_username = ?2  
                             union all 
                             select f.id, f.name, f.parent_id, concat(f.name, ' / ', fp.full_path)
                             from folders f 
@@ -86,6 +91,7 @@ public class FolderRepository {
                        limit 1
                    """)
                 .setParameter(1, folderId)
+                .setParameter(2, username)
                 .getSingleResult();
     }
 

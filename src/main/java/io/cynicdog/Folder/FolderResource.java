@@ -16,32 +16,37 @@ public class FolderResource {
     FolderService folderService;
 
     @GET
-    public Response findAll() {
+    @Path("/{username}")
+    public Response findAll(@PathParam("username") String username) {
 
-        var found = folderService.findAllFolders();
+        var found = folderService.findAllFolders(username);
 
         return Response.ok(found).build();
     }
 
     @GET
-    @Path("/{folderId}/path")
-    public Response findFolderPath(@PathParam("folderId") String folderId) {
+    @Path("/{username}/{folderId}/path")
+    public Response findFolderPath(@PathParam("username") String username,
+                                   @PathParam("folderId") String folderId) {
 
-        var found = folderService.findFolderPathById(folderId);
+        var found = folderService.findFolderPathById(username, folderId);
 
         return Response.ok(found).build();
     }
 
+    // TODO: add security ops
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{username}")
     @Transactional
-    public Response saveFolder(Folder folder) {
+    public Response saveFolder(@PathParam("username") String username, Folder folder) {
 
-        var found = folderService.saveFolder(folder);
+        var found = folderService.saveFolder(username, folder);
 
         return Response.ok(found).build();
     }
 
+    // TODO: add security ops
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional

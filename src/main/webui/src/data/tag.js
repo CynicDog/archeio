@@ -1,6 +1,8 @@
+const username = window.location.pathname.split('/')[1];
+
 export const fetchTags = () => {
 
-    return fetch('/api/tag')
+    return fetch(`/api/tag/${username}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch tags');
@@ -16,7 +18,7 @@ export const fetchTags = () => {
 
 export const fetchPostsByTag = (tagName) => {
 
-    return fetch(`/api/tag/${tagName}/posts`)
+    return fetch(`/api/tag//${username}/${tagName}/posts`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch tags');

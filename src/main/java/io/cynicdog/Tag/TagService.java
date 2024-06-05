@@ -11,7 +11,7 @@ public class TagService {
     @Inject
     TagRepository tagRepository;
 
-    public List<Tag> findAll() {
-        return tagRepository.findAll();
+    public List<Tag> findAll(String username) {
+        return tagRepository.findAll(username);
     }
 }

@@ -17,18 +17,20 @@ public class TagResource {
     PostService postService;
 
     @GET
-    public Response findAll() {
+    @Path("/{username}")
+    public Response findAll(@PathParam("username") String username) {
 
-        var found = tagService.findAll();
+        var found = tagService.findAll(username);
 
         return Response.ok(found).build();
     }
 
     @GET
-    @Path("/{tagName}/posts")
-    public Response findPostsByTag(@PathParam("tagName") String tagName) {
+    @Path("/{username}/{tagName}/posts")
+    public Response findPostsByTag(@PathParam("username") String username,
+                                   @PathParam("tagName") String tagName) {
 
-        var found = postService.findPostsByTag(tagName);
+        var found = postService.findPostsByTag(username, tagName);
 
         return Response.ok(found).build();
     }

@@ -1,12 +1,12 @@
-// TODO: user domain integration
+const username = window.location.pathname.split('/')[1];
 
 export const fetchFolderPath = async (folderId) => {
-    const response = await fetch(`/api/folder/${folderId}/path`);
+    const response = await fetch(`/api/folder/${username}/${folderId}/path`);
     return await response.text();
 }
 
 export const fetchFolders = async () => {
-    const response = await fetch('/api/folder');
+    const response = await fetch(`/api/folder/${username}`);
     const folders = await response.json();
 
     const filterFolders = (folder) => {
@@ -24,7 +24,7 @@ export const fetchFolders = async () => {
 };
 
 export const saveFolder = async (folder) => {
-    const response = await fetch('/api/folder', {
+    const response = await fetch(`/api/folder/${username}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export const saveFolder = async (folder) => {
 
 export const deleteFolder = async (parent, child) => {
     const requestBody = { parent: parent, child: child };
-    const response = await fetch('/api/folder', {
+    const response = await fetch(`/api/folder/${username}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'

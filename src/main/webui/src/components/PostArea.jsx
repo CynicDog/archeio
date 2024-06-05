@@ -9,10 +9,10 @@ import {fetchPostsByTag} from "../data/tag.js";
 
 const PostArea = () => {
 
-    const { selectedFolder } = useSelectedItemContext();
+    const { selectedFolder, selectedPost } = useSelectedItemContext();
 
     const {data: posts, isLoading, isError, refetch} = useQuery(
-        [selectedFolder],
+        [selectedFolder, selectedPost],
         () => {
             if (selectedFolder.id === 'tags') {
                 return fetchPostsByTag(selectedFolder.name)
