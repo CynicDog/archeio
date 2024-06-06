@@ -1,6 +1,9 @@
+// default user page as 'CynicDog'
+const username = window.location.pathname.split('/')[1] || 'CynicDog';
+
 export const savePost = ({ postId, content, tags, folderId }) => {
 
-    return fetch(`/api/post/${postId}`, {
+    return fetch(`/api/post/${username}/${postId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,7 +23,7 @@ export const savePost = ({ postId, content, tags, folderId }) => {
 
 export const fetchByFolder = (folderId) => {
 
-    return fetch(`/api/post/${folderId}`)
+    return fetch(`/api/post/${username}/${folderId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch posts');
@@ -33,9 +36,9 @@ export const fetchByFolder = (folderId) => {
         });
 };
 
-export const fetchFolders = () => {
+export const fetchPosts = () => {
 
-    return fetch(`/api/post`)
+    return fetch(`/api/post/${username}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch posts');

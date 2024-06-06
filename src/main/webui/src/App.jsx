@@ -48,7 +48,7 @@ const App = () => {
                             <FolderTree/>
                         )}
                     </div>
-                    <div className="bs-md rounded-3 p-2 mb-3">
+                    <div className="bs-md rounded-3 p-2 mb-3 overflow-auto">
                         <TagArea/>
                     </div>
                 </div>

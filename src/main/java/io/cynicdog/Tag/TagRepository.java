@@ -19,11 +19,13 @@ public class TagRepository {
         return Optional.ofNullable(em.find(Tag.class, name));
     }
 
-    public List<Tag> findAll() {
+    public List<Tag> findAll(String username) {
         return em.createQuery("""
                     select t 
                     from Tag t 
+                    where t.user.username = :username
                 """, Tag.class)
+                .setParameter("username", username)
                 .getResultList();
     }
 

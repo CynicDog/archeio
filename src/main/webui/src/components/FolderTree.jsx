@@ -5,6 +5,8 @@ import FolderOpened from "../../public/FolderOpened.jsx";
 import {useQuery} from "react-query";
 import {fetchFolders} from "../data/folder.js";
 import {useSelectedItemContext} from "../Context.jsx";
+import AddCircle from "../../public/AddCircle.jsx";
+import FolderEdit from "./FolderEdit.jsx";
 
 export const FolderTree = () => {
 
@@ -17,6 +19,11 @@ export const FolderTree = () => {
         {
         }
     );
+
+    const [showFolderInput, setShowFolderInput] = useState(false);
+    const toggleFolderInput = () => {
+        setShowFolderInput(!showFolderInput);
+    };
 
     return (
         <div>
@@ -36,6 +43,19 @@ export const FolderTree = () => {
                         }}
                         icon={<Folder/>}
                         expandedIcon={<FolderOpened/>}/>
+
+                    <div className="d-flex">
+                        <div className="ms-auto text-secondary btn border border-0 my-1" onClick={toggleFolderInput}>
+                            <AddCircle />
+                        </div>
+                    </div>
+                    {showFolderInput && (
+                        <FolderEdit
+                            selectedFolder={null}
+                            setSelectedFolder={setSelectedFolder}
+                            setShowFolderInput={setShowFolderInput}
+                        />
+                    )}
                 </div>
             )}
         </div>

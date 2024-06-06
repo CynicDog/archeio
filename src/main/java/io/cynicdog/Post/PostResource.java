@@ -1,6 +1,5 @@
 package io.cynicdog.Post;
 
-import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -17,29 +16,33 @@ public class PostResource {
     PostService postService;
 
     @GET
-    public Response findAll() {
+    @Path("/{username}")
+    public Response findAll(@PathParam("username") String username) {
 
-        var found = postService.findAll();
+        var found = postService.findAll(username);
 
         return Response.ok(found).build();
     }
 
     @GET
-    @Path("/{folderId}")
-    public Response findByFolder(@PathParam("folderId") String folderId) {
+    @Path("/{username}/{folderId}")
+    public Response findByFolder(@PathParam("username") String username,
+                                 @PathParam("folderId") String folderId) {
 
-        var found = postService.findByFolder(folderId);
+        var found = postService.findByFolder(username, folderId);
 
         return Response.ok(found).build();
     }
 
     @POST
-    @Path("/{postId}")
+    @Path("/{username}/{postId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response savePost(@PathParam("postId") Long postId, Map<String, Object> payload) {
+    public Response savePost(@PathParam("username") String username,
+                             @PathParam("postId") Long postId,
+                             Map<String, Object> payload) {
 
-        var found = postService.savePost(postId, payload);
+        var found = postService.savePost(username, postId, payload);
 
         return Response.ok(found).build();
     }

@@ -4,6 +4,8 @@ import io.cynicdog.Folder.Folder;
 import io.cynicdog.Folder.FolderRepository;
 import io.cynicdog.Tag.Tag;
 import io.cynicdog.Tag.TagRepository;
+import io.cynicdog.User.User;
+import io.cynicdog.User.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -26,32 +28,42 @@ public class PostService {
     @Inject
     TagRepository tagRepository;
 
-    public List<Post> findAll() {
-        return postRepository.findAll();
+    @Inject
+    UserRepository userRepository;
+
+    public List<Post> findAll(String username) {
+        return postRepository.findAll(username);
     }
 
-    public List<Post> findByFolder(String folderId) {
+    public List<Post> findByFolder(String username, String folderId) {
 
-        return postRepository.findByFolder(folderId);
+        return postRepository.findByFolder(username, folderId);
     }
 
-    public List<Post> findPostsByTag(String tagName) {
+    public List<Post> findPostsByTag(String username, String tagName) {
 
-        return postRepository.findByTag(tagName);
+        return postRepository.findByTag(username, tagName);
     }
 
-    public Post savePost(Long postId, Map<String, Object> payload) {
-        String content = (String) payload.get("content");
-        List<String> tagNames = (List<String>) payload.get("tags");
+    public Post savePost(String username, Long postId, Map<String, Object> payload) {
+
+        User user = userRepository.findByUsername(username).orElseGet(() -> new User(username));
 
         Post post = postRepository
-                .findById(postId)
-                .orElseGet(() -> new Post(folderRepository.findById((String) payload.get("folderId")).orElse(null)));
+                .findById(username, postId)
+                .orElseGet(() ->
+                        new Post(
+                                folderRepository.findById(username, (String) payload.get("folderId")).orElse(null),
+                                user
+                        )
+                );
 
+        String content = (String) payload.get("content");
         post.setContent(content);
 
+        List<String> tagNames = (List<String>) payload.get("tags");
         if (tagNames != null) {
-            updateTags(post, tagNames);
+            updateTags(user, post, tagNames);
         }
 
         Post saved = postRepository.save(post);
@@ -59,7 +71,7 @@ public class PostService {
         return saved;
     }
 
-    public void updateTags(Post post, List<String> tagNames) {
+    public void updateTags(User user, Post post, List<String> tagNames) {
         Set<String> currentTagNames = post.getTags().stream()
                 .map(Tag::getName)
                 .collect(Collectors.toSet());
@@ -72,7 +84,7 @@ public class PostService {
                 Tag tag = tagRepository
                         .findByName(tagName)
                         .orElseGet(() -> {
-                            Tag newTag = new Tag(tagName);
+                            Tag newTag = new Tag(tagName, user);
                             tagRepository.save(newTag);
                             return newTag;
                         });

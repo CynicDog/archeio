@@ -1,7 +1,9 @@
 package io.cynicdog.Post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.cynicdog.Folder.Folder;
 import io.cynicdog.Tag.Tag;
+import io.cynicdog.User.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -38,14 +40,22 @@ public class Post {
     private Set<Tag> tags = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "folder_id")
+    @JoinColumns({
+            @JoinColumn(name = "folder_id", referencedColumnName = "id"),
+            @JoinColumn(name = "folder_user", referencedColumnName = "user_username")
+    })
     private Folder folder;
+
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
     public Post() {
     }
 
-    public Post(Folder folder) {
+    public Post(Folder folder, User user) {
         this.folder = folder;
+        this.user = user;
     }
 
     public Long getId() {
@@ -114,5 +124,13 @@ public class Post {
 
     public void setFolder(Folder folder) {
         this.folder = folder;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
