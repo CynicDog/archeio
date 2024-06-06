@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
         setGithubAvatar(null);
         setGithubHome(null);
 
-        window.location.href= '/';
+        window.location.reload();
     };
 
     return (

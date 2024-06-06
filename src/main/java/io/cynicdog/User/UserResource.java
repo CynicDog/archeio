@@ -2,16 +2,14 @@ package io.cynicdog.User;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@Path("/user")
+@Path("/api/user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
@@ -24,8 +22,20 @@ public class UserResource {
     public void signIn(Map<String, String> payload) {
 
         User user = userService.findByUsername(payload.get("username"));
+        user.setAvatarUrl(payload.get("avatar_url"));
+        user.setGithubHome(payload.get("github_home"));
+
         user.addSignInHistory(LocalDateTime.now());
 
         userService.save(user);
+    }
+
+    @GET
+    @Path("/{username}")
+    public Response find(@PathParam("username") String username) {
+
+        var found = userService.findByUsername(username);
+
+        return Response.ok(found).build();
     }
 }

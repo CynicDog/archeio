@@ -1,5 +1,5 @@
 -- Inserting sample data for users
-INSERT INTO users (username, createdAt) VALUES ('CynicDog', current_timestamp);
+INSERT INTO users (username, createdAt, githubHome, avatarurl) VALUES ('CynicDog', current_timestamp, 'https://github.com/CynicDog', 'https://avatars.githubusercontent.com/u/96886982?v=4');
 
 -- Inserting sample data for folders
 INSERT INTO folders (id, name, parent_id, user_username, createdAt) VALUES

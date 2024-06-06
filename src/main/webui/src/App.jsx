@@ -7,6 +7,10 @@ import PostArea from "./components/PostArea.jsx";
 import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
 import {marked} from "marked";
+import {Avatar, Spinner} from "@patternfly/react-core";
+import {useQuery} from "react-query";
+import {fetchUser} from "./data/user.js";
+import ProfileArea from "./components/ProfileArea.jsx";
 
 const App = () => {
 
@@ -33,6 +37,7 @@ const App = () => {
             <div className="row mt-4">
                 {/* Menu sidebar */}
                 <div className={`col-lg-${isMenuOpen ? '2' : '1'}`}>
+                    <ProfileArea />
                     <div className="bs-md rounded-3 p-2 mb-3">
                         <div className="d-flex justify-content-between m-2">
                             <div className="btn border border-0" onClick={toggleMenu}>
@@ -54,7 +59,7 @@ const App = () => {
                 </div>
                 {/* Master view */}
                 <div className={`col-lg-${getMasterViewColWidth()} mb-3`}>
-                    <div className="bs-md rounded-3 p-3">
+                    <div className="bs-sm rounded-3 p-3">
                         <PostArea />
                     </div>
                 </div>
@@ -68,7 +73,7 @@ const App = () => {
                         </div>
                     ) : (
                         <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
-                            <div className="bs-md rounded-3 p-3 px-5" style={{position: 'sticky', top: '30px'}}>
+                            <div className="bs-sm rounded-3 p-3 px-5" style={{position: 'sticky', top: '30px'}}>
                                 <div dangerouslySetInnerHTML={{__html: marked.parse(selectedPost.content)}}/>
                             </div>
                         </div>

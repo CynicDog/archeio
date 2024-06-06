@@ -67,18 +67,13 @@ const Breadcrumbs = ({postRefetch}) => {
                 {githubAuthenticated && (
                     <div className="ms-4 ">
                         <Label onClick={handlePostAdd} variant="outline" color="blue" >
-                            Write a Post
+                            Write a Note
                         </Label>
                     </div>
                 )}
                 <div className="ms-auto  ">
                     <GithubAuthLabel />
                 </div>
-                {githubAuthenticated && (
-                    <div className=" ">
-                        <GithubLinkArea />
-                    </div>
-                )}
             </div>
         </div>
     );

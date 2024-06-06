@@ -16,10 +16,10 @@ const PostEmptyState = () => {
 
     return (
         <div className="d-flex justify-content-center align-items-center border rounded-3 mt-4"
-             style={{height: "85vh"}}>
+             style={{height: "80vh"}}>
             <div>
-                <EmptyState variant={EmptyStateVariant.xs}>
-                    <EmptyStateHeader titleText="No Notes Found" headingLevel="h4"/>
+                <EmptyState variant={EmptyStateVariant.sm}>
+                    <EmptyStateHeader titleText="No Notes Found" headingLevel="h3" style={{paddingBottom: "20px"}}/>
                     <EmptyStateBody>
                         It looks like you don't have any notes yet. Create your first note to get started!
                     </EmptyStateBody>

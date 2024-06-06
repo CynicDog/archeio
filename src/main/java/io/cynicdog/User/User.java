@@ -27,6 +27,9 @@ public class User {
     @JsonIgnore
     private List<LocalDateTime> signInHistory = new ArrayList<>();
 
+    private String githubHome;
+    private String avatarUrl;
+
     public User() {
     }
 
@@ -52,5 +55,21 @@ public class User {
 
     public void addSignInHistory(LocalDateTime signInHistory) {
         this.signInHistory.add(signInHistory);
+    }
+
+    public String getGithubHome() {
+        return githubHome;
+    }
+
+    public void setGithubHome(String githubUrl) {
+        this.githubHome = githubUrl;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

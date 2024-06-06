@@ -138,9 +138,12 @@ public class GithubAPI {
 
             // internal request to populate User table for the first sign-in
             WebClient.create(ctx.vertx())
-                    .post(port, host, "/user/sign-in")
+                    .post(port, host, "/api/user/sign-in")
                     .sendJsonObject(
-                            new JsonObject().put("username", githubUsername)
+                            new JsonObject()
+                                    .put("username", githubUsername)
+                                    .put("github_home", githubHome)
+                                    .put("avatar_url", githubAvatar)
                     );
 
             ctx.response()
