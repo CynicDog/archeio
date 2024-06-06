@@ -6,6 +6,7 @@ import {fetchByFolder, fetchPosts} from '../data/post.js';
 import {useSelectedItemContext} from '../Context.jsx';
 import {Spinner} from "@patternfly/react-core";
 import {fetchPostsByTag} from "../data/tag.js";
+import PostEmptyState from "./PostEmptyState.jsx";
 
 const PostArea = () => {
 
@@ -34,9 +35,16 @@ const PostArea = () => {
                     <Spinner/>
                 </div>
             ) : (
-                posts.map(post => (
-                    <PostSummary key={post.id} post={post} />
-                ))
+                posts.length === 0 ? (
+                    <>
+                        <PostEmptyState />
+                    </>
+                    ) : (
+                    posts.map(post => (
+                        <PostSummary key={post.id} post={post} />
+                    ))
+                )
+
             )}
         </>
     );

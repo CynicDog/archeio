@@ -25,6 +25,14 @@ export const getGithubAvatarFromCookie = () => {
     return null;
 };
 
+export const getGithubHomeFromCookie = () => {
+    const cookie = document.cookie.split('; ').find(row => row.startsWith('github_home='));
+    if (cookie) {
+        return cookie.split('=')[1];
+    }
+    return null;
+};
+
 export const removeGithubAccessTokenCookie = () => {
     document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 };
@@ -35,4 +43,8 @@ export const removeGithubUsernameCookie = () => {
 
 export const removeGithubAvatarCookie = () => {
     document.cookie = 'github_avatar=;';
+};
+
+export const removeGithubHomeCookie = () => {
+    document.cookie = 'github_home=;';
 };

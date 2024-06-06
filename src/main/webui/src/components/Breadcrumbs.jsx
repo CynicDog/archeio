@@ -7,6 +7,8 @@ import { fetchFolderPath } from '../data/folder.js';
 import FolderEdit from './FolderEdit.jsx';
 import AddCircle from '../../public/AddCircle.jsx';
 import GithubAuthLabel from './GithubAuthLabel.jsx';
+import GithubLinkArea from "./GithubLinkArea.jsx";
+import {Label} from "@patternfly/react-core";
 
 const Breadcrumbs = ({postRefetch}) => {
     const { githubAuthenticated } = useAuth();
@@ -44,13 +46,13 @@ const Breadcrumbs = ({postRefetch}) => {
 
     return (
         <div className="bg-light-subtle border border-1 rounded-3 p-2">
-            <div className="d-flex">
+            <div className="d-flex align-items-center">
                 <span className="text-body-secondary fs-3 fw-lighter">
                     {pathData}
                 </span>
                 {githubAuthenticated && !((selectedFolder?.name === 'All') || (selectedFolder.id === 'tags')) && (
                     <>
-                        <div className="text-secondary btn border border-0 mx-3 my-1" onClick={toggleFolderInput}>
+                        <div className="text-secondary btn border border-0 " onClick={toggleFolderInput}>
                             <AddCircle />
                         </div>
                         {showFolderInput && (
@@ -62,10 +64,19 @@ const Breadcrumbs = ({postRefetch}) => {
                         )}
                     </>
                 )}
-                <GithubAuthLabel />
                 {githubAuthenticated && (
-                    <div className=" btn border border-0 my-1" onClick={handlePostAdd}>
-                        <PostAdd />
+                    <div className="ms-4 ">
+                        <Label onClick={handlePostAdd} variant="outline" color="blue" >
+                            Write a Post
+                        </Label>
+                    </div>
+                )}
+                <div className="ms-auto  ">
+                    <GithubAuthLabel />
+                </div>
+                {githubAuthenticated && (
+                    <div className=" ">
+                        <GithubLinkArea />
                     </div>
                 )}
             </div>

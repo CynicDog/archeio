@@ -11,7 +11,7 @@ const GithubAuthLabel = () => {
     };
 
     return (
-        <div className="ms-auto mt-2 mr-4">
+        <div>
             {githubAuthenticated ? (
                 <Label onClick={() => githubSignOut()} variant="outline"
                        style={{ marginRight: "5px" }} icon={<Avatar src={githubAvatar} size="sm" />}>

@@ -1,8 +1,8 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {
-    getGithubAccessTokenFromCookie, getGithubAvatarFromCookie,
+    getGithubAccessTokenFromCookie, getGithubAvatarFromCookie, getGithubHomeFromCookie,
     getGithubUsernameFromCookie,
-    removeGithubAccessTokenCookie, removeGithubAvatarCookie, removeGithubUsernameCookie
+    removeGithubAccessTokenCookie, removeGithubAvatarCookie, removeGithubHomeCookie, removeGithubUsernameCookie
 } from "./module/cookie.js";
 
 // Theme Provider
@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     const [githubAuthenticated, setGithubAuthenticated] = useState(null);
     const [githubUsername, setGithubUsername] = useState(null);
     const [githubAvatar, setGithubAvatar] = useState(null);
+    const [githubHome, setGithubHome] = useState(null);
 
     useEffect(() => {
 
@@ -65,9 +66,13 @@ export const AuthProvider = ({ children }) => {
         if (githubAvatar !== null) {
             setGithubAvatar(githubAvatar);
         }
+
+        const githubHome = getGithubHomeFromCookie();
+        if (githubHome !== null) {
+            setGithubHome(githubHome);
+        }
     }, []);
 
-    // TODO: empty state on sign out status
     const handleGithubSignOut = () => {
 
         sessionStorage.removeItem("ACCESS_TOKEN");
@@ -75,21 +80,22 @@ export const AuthProvider = ({ children }) => {
         removeGithubAccessTokenCookie();
         removeGithubUsernameCookie();
         removeGithubAvatarCookie();
+        removeGithubHomeCookie();
 
         setGithubAuthenticated(null);
         setGithubUsername(null);
         setGithubAvatar(null);
+        setGithubHome(null);
 
         window.location.href= '/';
     };
 
     return (
         <AuthContext.Provider value={{
-            githubAuthenticated,
-            setGithubAuthenticated,
-            githubUsername,
-            setGithubUsername,
+            githubAuthenticated, setGithubAuthenticated,
+            githubUsername, setGithubUsername,
             githubAvatar,
+            githubHome,
             handleGithubSignOut
         }}>
             {children}

@@ -129,9 +129,12 @@ public class GithubAPI {
         var userInfoFuture = getGithubUserInfo(client, accessToken);
         userInfoFuture.thenAccept(userInfo -> {
 
+            logger.info(userInfo.encodePrettily());
+
             String githubUserId = userInfo.getString("id");
             String githubUsername = userInfo.getString("login");
             String githubAvatar = userInfo.getString("avatar_url");
+            String githubHome = userInfo.getString("html_url");
 
             // internal request to populate User table for the first sign-in
             WebClient.create(ctx.vertx())
@@ -146,6 +149,7 @@ public class GithubAPI {
                     .addCookie(Cookie.cookie("access_token", accessToken))
                     .addCookie(Cookie.cookie("github_username", githubUsername.replaceAll("\\s", "_")))
                     .addCookie(Cookie.cookie("github_avatar", githubAvatar))
+                    .addCookie(Cookie.cookie("github_home", githubHome))
                     .end();
 
         }).exceptionally(ex -> {
