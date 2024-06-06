@@ -10,6 +10,7 @@ import React from "react";
 import GithubLinkArea from "./GithubLinkArea.jsx";
 import ChatGPT from "../../public/ChatGPT.jsx";
 import ChatGPTLinkArea from "./ChatGPTLinkArea.jsx";
+import ReadMe from "./ReadMe.jsx";
 
 const PostEmptyState = () => {
 
@@ -26,6 +27,7 @@ const PostEmptyState = () => {
                         <EmptyStateActions>
                             <GithubLinkArea />
                             <ChatGPTLinkArea />
+                            <ReadMe />
                         </EmptyStateActions>
                     </EmptyStateFooter>
                 </EmptyState>
