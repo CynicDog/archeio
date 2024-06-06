@@ -14,7 +14,7 @@ const GithubAuthLabel = () => {
         <div>
             {githubAuthenticated ? (
                 <Label onClick={() => githubSignOut()} variant="outline"
-                       style={{ marginRight: "5px" }} icon={<Github />}>
+                       style={{ marginRight: "5px" }} icon={<Avatar src={githubAvatar} size="sm" />}>
                     Sign out
                 </Label>
             ) : (
