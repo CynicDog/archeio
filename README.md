@@ -1,89 +1,103 @@
 [![Backup PostgreSQL Database for macOS arm64](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml)
 
-Deploying Vert.x in Quarkus Application on GKE 
-=======================================
+# Welcome to Archeio
 
-This project demonstrates deploying a Quarkus-based Vert.x application to Google Kubernetes Engine (GKE).
+Archeio is a personal note-taking app designed to help you organize your thoughts and ideas seamlessly. Built on the Quarkus Java runtime environment and deployed on Google Kubernetes Engine (GKE), Archeio offers an efficient platform for all your note-taking needs.
 
-## Development Environment
-- **Operating System**: macOS 13.2.1 (Build 22D68)
+## How to Use Archeio
 
-## Technologies Used
-- **Quarkus**: A Kubernetes-native Java framework designed for fast startup and low memory footprint.
-- **Minikube**: A tool to run a single-node Kubernetes cluster locally for development and testing.
-- **Google Kubernetes Engine (GKE)**: A managed Kubernetes service provided by Google Cloud Platform (GCP).
-- **Jib**: A container image building tool that simplifies packaging Java applications into container images without needing a Dockerfile.
+### Sign In Using GitHub OAuth2
 
-# Local Deployment with Minikube
+1. **Select GitHub for Authentication**:
 
-### Prerequisites
-- Ensure Minikube is installed and initialized:
-```bash
-minikube start
-```
+   - Click on the "Sign in" button. This will redirect you to the GitHub OAuth2 authentication page.
 
-### Configure Docker Client for Minikube
-Configure the local Docker client to use the Docker daemon running inside Minikube:
-```bash
-eval $(minikube docker-env)
-```
+2. **Authorize Archeio**:
 
-### Package and Deploy the Application
-Build and deploy the application to Minikube with ARM64 platform support:
-```bash
-mvn clean package -Dquarkus.container-image.build=true \
-    -Dquarkus.jib.platforms=linux/arm64/v8 \
-    -Dquarkus.kubernetes.deploy=true
-```
+   - If prompted, log in to your GitHub account.
 
-### Test Deployment
-Make a request to the deployed service to ensure successful deployment:
-```bash
-kubectl exec -it vertx-quarkus-demo-<POD_ID> -- /bin/bash
-curl http://vertx-quarkus-demo/greeting
-```
+   - Authorize Archeio to access your GitHub account by clicking "Authorize".
 
-# Deployment to Google Kubernetes Engine (GKE)
+3. **Complete Sign-In**:
 
-### Configure Google Cloud SDK
-Initialize and configure the Google Cloud SDK for authentication:
-```bash
-gcloud auth login
-gcloud init
-```
+   - You will be redirected back to Archeio, now signed in with your GitHub account.
 
-### Configure Docker Authentication for GCR
-Configure Docker authentication information to interact with Google Artifact Registry for Docker: 
-```bash
-gcloud auth configure-docker
-```
+### Add a Folder on the Left Sidebar Menu
 
-### Build and Push Container Image to GCR
-Build and push the container image to Google Container Registry using Jib:
-```bash
-mvn clean package -Dquarkus.container-image.build=true \
-    -Dquarkus.container-image.push=true \
-    -Dquarkus.jib.platforms=linux/arm64/v8
-```
+1. **Locate the Sidebar**:
 
-### Create a GKE Cluster
-Create a Kubernetes cluster on Google Kubernetes Engine:
-<img width="1423" alt="Capture 2024-04-07 at 11 48 25 AM" src="https://github.com/CynicDog/Vertx-Quarkus-GKE/assets/96886982/d9d05f46-4f13-4736-a6dc-8a89201b9208">
+   - On the main dashboard, find the left sidebar menu where your folders and notes are listed.
 
+2. **Add a New Folder**:
 
-### Connect to GKE Cluster
-Connect your terminal to the generated Kubernetes cluster on GKE:
-```bash
-gcloud container clusters get-credentials {YOUR_CLUSTER_NAME} --region {YOUR_REGION} --project {YOUR_PROJECT_ID}
-```
+   - Look for an "Add Folder" button or a "+" icon at the top or bottom of the sidebar.
 
-### Deploy the Application to GKE
-Deploy the Quarkus application to the GKE cluster:
-```bash
-mvn clean package -Dquarkus.kubernetes.deploy=true
-```
+   - Click on this button to create a new folder.
 
-## Conclusion
-By following these steps, you can deploy your Vert.x in Quarkus application both locally with Minikube for testing and on Google Kubernetes Engine (GKE) for production. This streamlined deployment process leverages modern tools like Jib and GKE to simplify container image building and Kubernetes orchestration.
+   - Enter a name for your new folder in the dialog that appears.
+
+   - Confirm to add the folder to the sidebar.
+
+### Add Subfolders via the Breadcrumbs Create Button
+
+1. **Navigate to the Parent Folder**:
+
+   - Click on the parent folder where you want to add a subfolder. This will open the folder and show its contents.
+
+2. **Use the Breadcrumbs Create Button**:
+
+   - At the top of the folder view, you will see a breadcrumb navigation bar.
+
+   - Next to the breadcrumb path, there should be a "Create" button or a "+" icon.
+
+   - Click on this button to create a new subfolder.
+
+3. **Enter Subfolder Details**:
+
+   - Enter the name of the subfolder in the dialog that appears.
+
+   - Confirm to add the subfolder under the selected parent folder.
+
+### Tag a Post by Typing a #tag in the Rich Text Editor
+
+1. **Open the Rich Text Editor**:
+
+   - Create a new note or open an existing one where you want to add tags.
+
+2. **Add Tags in the Editor**:
+
+   - While typing your note, you can create a tag by typing `#` followed by the tag name (e.g., `#important`).
+
+   - The editor should automatically recognize the `#` symbol and format it as a tag.
+
+3. **Manage Tags**:
+
+   - Tags will appear as part of the note content. You can click on them to see all notes with the same tag or to edit them.
+
+## Contributing
+
+We welcome contributions from the community! Here are a few ways you can get involved:
+
+- **Report Bugs**: If you find a bug, please open an issue.
+
+- **Submit Pull Requests**: We accept pull requests for new features, bug fixes, and improvements.
+
+- **Improve Documentation**: Help us improve our documentation by making it clearer and more comprehensive.
+
+## Code of Conduct
+
+We are committed to providing a friendly, safe, and welcoming environment for all. Please read and adhere to our Code of Conduct.
+
+## Contact
+
+If you have any questions, feel free to reach out to us:
+
+- **Email**: thecynicdog0328@gmail.com
+
+- **GitHub**: [github.com/CynicDog/archeio](https://github.com/CynicDog/archeio)
+
+Thank you for your interest in Archeio! We look forward to collaborating with you.
+
+`#archeio`
 
 
