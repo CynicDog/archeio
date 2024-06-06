@@ -3,7 +3,7 @@ import React from "react";
 import {useQuery} from "react-query";
 import {fetchUser} from "../data/user.js";
 
-const ProfileArea = () => {
+const ProfileArea = ({isMenuOpen}) => {
 
     const username = window.location.pathname.split('/')[1] || 'CynicDog';
 
@@ -29,7 +29,11 @@ const ProfileArea = () => {
                         size="md"
                         border="light"
                         onClick={() => {window.open(user.githubHome)}}/>
-                    <span className="fw-lighter fs-5 mx-1">{user.username}'s Archeio</span>
+                    {isMenuOpen && (
+                        <>
+                            <span className="fw-lighter fs-5 mx-1">{user.username}'s Archeio</span>
+                        </>
+                    )}
                 </div>
             )}
         </>
