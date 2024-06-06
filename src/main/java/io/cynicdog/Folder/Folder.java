@@ -8,19 +8,31 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "folders")
+@IdClass(Folder.CompositePrimaryKeys.class)
 public class Folder {
 
     @Id
     private String id;
 
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "user_username")
+    @JsonIgnore
+    private User user;
+
     @Column(nullable = false)
     private String name;
 
     @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "parent_id", referencedColumnName = "id"),
+            @JoinColumn(name = "user_username", referencedColumnName = "user_username")
+    })
     @JsonIgnore
     private Folder parent;
 
@@ -28,19 +40,8 @@ public class Folder {
     @OrderBy("id asc")
     private Set<Folder> children = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnore
-    private User user;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
-
-    // TODO configure composite primary key over materialized folder path and username
-    // @Embeddable
-    static class compositePrimaryKeys implements Serializable {
-        private String id;
-        private String username;
-    }
 
     public Folder() {
     }
@@ -51,6 +52,14 @@ public class Folder {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -81,19 +90,47 @@ public class Folder {
         this.children.add(subFolder);
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Folder)) return false;
+        Folder folder = (Folder) o;
+        return id.equals(folder.id) &&
+                user.equals(folder.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user);
+    }
+
+    static class CompositePrimaryKeys implements Serializable {
+
+        private String id;
+        private String user;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getUser() {
+            return user;
+        }
+
+        public void setUser(String user) {
+            this.user = user;
+        }
     }
 }

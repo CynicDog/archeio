@@ -21,6 +21,7 @@ public class UserRepository {
         if (user.getCreatedAt() == null) {
 
             user.setCreatedAt(LocalDateTime.now());
+            em.persist(user);
 
             em.createNativeQuery("""
                         insert into folders (id, name, parent_id, user_username, createdat)
@@ -28,8 +29,6 @@ public class UserRepository {
                     """)
                     .setParameter(1, user.getUsername())
                     .executeUpdate();
-
-            em.persist(user);
         } else {
             em.merge(user);
         }

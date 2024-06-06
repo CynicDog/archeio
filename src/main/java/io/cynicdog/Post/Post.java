@@ -40,7 +40,10 @@ public class Post {
     private Set<Tag> tags = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "folder_id")
+    @JoinColumns({
+            @JoinColumn(name = "folder_id", referencedColumnName = "id"),
+            @JoinColumn(name = "folder_user", referencedColumnName = "user_username")
+    })
     private Folder folder;
 
     @ManyToOne

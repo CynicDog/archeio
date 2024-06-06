@@ -19,7 +19,7 @@ public class FolderRepository {
         return em.createQuery("""
                     select f 
                     from Folder f 
-                    where f.parent is null
+                    where f.parent.id is null
                       and f.user.username = :username 
                     order by f.createdAt
                 """, Folder.class)
@@ -62,7 +62,7 @@ public class FolderRepository {
                     values (
                         ?1, ?2, ?3, ?4, ?5
                     )
-                    on conflict (id) do nothing 
+                    on conflict (id, user_username) do nothing 
                 """)
                 .setParameter(1, folder.getId())
                 .setParameter(2, folder.getName())
@@ -85,6 +85,7 @@ public class FolderRepository {
                             select f.id, f.name, f.parent_id, concat(f.name, ' / ', fp.full_path)
                             from folders f 
                             join folder_path fp on f.id = fp.parent_id 
+                            where f.user_username = ?2
                        )
                        select full_path 
                        from folder_path
