@@ -8,6 +8,7 @@ import TagArea from "./components/TagArea.jsx";
 import Menu from "../public/Menu.jsx";
 import {marked} from "marked";
 import ProfileArea from "./components/ProfileArea.jsx";
+import './App.css';
 
 const App = () => {
 

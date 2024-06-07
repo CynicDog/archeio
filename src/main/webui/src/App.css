@@ -1,6 +1,6 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+#folder-tree-area ul,
+#folder-tree-area ol {
+  padding: 0 !important;
+  margin-left: 0 !important;
+  list-style-type: none !important;
 }
