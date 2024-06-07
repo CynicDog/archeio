@@ -4,9 +4,9 @@ on:
 
 env: 
   PROJECT_ID: ${{ secrets.GKE_PROJECT_ID }}
-  GKE_CLUSTER: autopilot-cluster-1      # Add your cluster name here.
-  GKE_ZONE: us-central1                 # Add your cluster zone here.
-  DEPLOYMENT_NAME: quarkus-gke          # Add your deployment name here.
+  GKE_CLUSTER: 'autopilot-cluster-1'             # Add your cluster name here.
+  GKE_ZONE: 'us-central1'                        # Add your cluster zone here.
+  DEPLOYMENT_NAME: 'quarkus-gke-deploy'          # Add your deployment name here.
 
 jobs:
   setup-build-publish-deploy:
@@ -29,10 +29,6 @@ jobs:
         service_account_key: ${{ secrets.GKE_SA_KEY }}
         project_id: ${{ env.PROJECT_ID }}
 
-    - name: Set default application login 
-      run: | 
-        gcloud auth application-default login
-
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
     - name: Configure Docker authentication
@@ -40,12 +36,11 @@ jobs:
         gcloud auth configure-docker
 
     # Get the GKE credentials so we can deploy to the cluster
-    - uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
+    - uses: google-github-actions/get-gke-credentials@v2.1.0
       with:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
         project_id: ${{ env.PROJECT_ID }}
-        credentials: ${{ secrets.GKE_SA_KEY }}
 
     - name: Build Quarkus App and Push to Image Registry 
       run: |
