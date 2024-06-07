@@ -1,9 +1,8 @@
 name: Deploy Quarkus App onto GKE
-on:
-  push:
-    branches:
-      - master
 
+on:
+  workflow_dispatch: 
+  
 env: 
   PROJECT_ID: 'encoded-etching-425009-t7'
   GKE_CLUSTER: 'autopilot-cluster-1'             # Add your cluster name here.
