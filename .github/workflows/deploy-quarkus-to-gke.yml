@@ -3,7 +3,7 @@ on:
   workflow_dispatch: 
 
 env: 
-  PROJECT_ID: ${{ secrets.GKE_PROJECT_ID }}
+  PROJECT_ID: 'encoded-etching-425009-t7'
   GKE_CLUSTER: 'autopilot-cluster-1'             # Add your cluster name here.
   GKE_ZONE: 'us-central1'                        # Add your cluster zone here.
   DEPLOYMENT_NAME: 'quarkus-gke-deploy'          # Add your deployment name here.
