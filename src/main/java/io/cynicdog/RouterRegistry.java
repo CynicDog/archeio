@@ -17,9 +17,9 @@ public class RouterRegistry {
     static final Logger logger = Logger.getLogger(RouterRegistry.class);
 
     public void init(@Observes Router router,
-                     @ConfigProperty(name="github.app.client.id") String clientId,
-                     @ConfigProperty(name="github.app.client.secret") String clientSecret,
-                     @ConfigProperty(name="github.app.redirection.url") String redirectionUrl,
+                     @ConfigProperty(name="archeio.github.app.client.id") String clientId,
+                     @ConfigProperty(name="archeio.github.app.client.secret") String clientSecret,
+                     @ConfigProperty(name="archeio.github.app.redirection.url") String redirectionUrl,
                      @ConfigProperty(name="host") String host,
                      @ConfigProperty(name="port") int port) {
 
