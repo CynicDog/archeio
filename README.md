@@ -1,4 +1,5 @@
 [![Backup PostgreSQL Database for macOS arm64](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml)
+[![Deploy Quarkus App onto GKE](https://github.com/CynicDog/archeio/actions/workflows/deploy-quarkus-to-gke.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/deploy-quarkus-to-gke.yml)
 
 # Welcome to Archeio
 
