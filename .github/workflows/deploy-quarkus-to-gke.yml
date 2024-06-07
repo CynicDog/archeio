@@ -1,0 +1,53 @@
+name: Deploy Quarkus App onto GKE
+on:
+  workflow_dispatch: 
+
+env: 
+  PROJECT_ID: ${{ secrets.GKE_PROJECT_ID }}
+  GKE_CLUSTER: autopilot-cluster-1      # Add your cluster name here.
+  GKE_ZONE: us-central1                 # Add your cluster zone here.
+  DEPLOYMENT_NAME: quarkus-gke          # Add your deployment name here.
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - uses: actions/setup-java@v4.2.1
+      with:
+        distribution: 'temurin' # See 'Supported distributions' for available options
+        java-version: '17'
+
+    # Setup gcloud CLI
+    - uses: google-github-actions/setup-gcloud@v2.1.0
+      with:
+        service_account_key: ${{ secrets.GKE_SA_KEY }}
+        project_id: ${{ secrets.GKE_PROJECT }}
+
+    # Configure Docker to use the gcloud command-line tool as a credential
+    # helper for authentication
+    - name: Configure Docker authentication
+      run: |
+        gcloud --quiet auth configure-docker
+
+    # Get the GKE credentials so we can deploy to the cluster
+    - uses: google-github-actions/get-gke-credentials@v2.1.0
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
+        project_id: ${{ env.PROJECT_ID }}
+
+    - name: Build Quarkus App and Push to Image Registry 
+      run: |
+        mvn clean package -Dquarkus.container-image.build=true \
+        -Dquarkus.container-image.push=true \
+        -Dquarkus.jib.platforms=linux/arm64/v8
+
+    - name: Deploy Quarkus App to GKE
+      run: | 
+        mvn clean package -Dquarkus.kubernetes.deploy=true
