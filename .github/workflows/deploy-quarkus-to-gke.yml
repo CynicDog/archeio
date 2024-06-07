@@ -1,6 +1,8 @@
 name: Deploy Quarkus App onto GKE
 on:
-  workflow_dispatch: 
+  push:
+    branches:
+      - master
 
 env: 
   PROJECT_ID: 'encoded-etching-425009-t7'
