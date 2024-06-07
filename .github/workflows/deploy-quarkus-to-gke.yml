@@ -35,8 +35,8 @@ jobs:
     - id: 'get-credentials'
       uses: 'google-github-actions/get-gke-credentials@v2'
       with:
-        cluster_name: 'my-cluster'
-        location: 'us-central1-a'
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
         project_id: ${{ env.PROJECT_ID }}
 
     # Setup gcloud CLI
