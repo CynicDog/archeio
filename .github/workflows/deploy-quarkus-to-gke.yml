@@ -23,9 +23,17 @@ jobs:
         distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: '17'
     
-    - uses: 'google-github-actions/auth@v2'
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
       with:
-        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}' 
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v2'
+      with:
+        cluster_name: 'my-cluster'
+        location: 'us-central1-a'
+        project_id: ${{ env.PROJECT_ID }}
 
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@v2.1.0
@@ -37,13 +45,6 @@ jobs:
     - name: Configure Docker authentication
       run: |
         gcloud auth configure-docker
-
-    # Get the GKE credentials so we can deploy to the cluster
-    - uses: google-github-actions/get-gke-credentials@v2.1.0
-      with:
-        cluster_name: ${{ env.GKE_CLUSTER }}
-        location: ${{ env.GKE_ZONE }}
-        project_id: ${{ env.PROJECT_ID }}
 
     - name: Build Quarkus App and Push to Image Registry 
       run: |
