@@ -55,8 +55,8 @@ jobs:
         mvn clean package -Dquarkus.container-image.build=true \
         -Dquarkus.container-image.push=true \
         -Dquarkus.jib.platforms=linux/arm64/v8 \
-        -Darcheio.github.app.client.id=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_ID }} \
-        -Darcheio.github.app.client.secret=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_SECRET }} \
+        -Dprod.archeio.github.app.client.id=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_ID }} \
+        -Dprod.archeio.github.app.client.secret=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_SECRET }} \
         --file pom.xml
     
     - name: Deploy Quarkus App to GKE
