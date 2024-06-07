@@ -57,9 +57,13 @@ jobs:
     # Create Kubernetes ConfigMap
     - name: Create Kubernetes ConfigMap
       run: |
-        kubectl create configmap archeio-github-app \
-          --from-literal=archeio.github.app.client.id=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_ID }} \
-          --from-literal=archeio.github.app.client.secret=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_SECRET }}
+        if ! kubectl get configmap archeio-github-app; then
+          kubectl create configmap archeio-github-app \
+            --from-literal=archeio.github.app.client.id=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_ID }} \
+            --from-literal=archeio.github.app.client.secret=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_SECRET }};
+        else
+          echo "ConfigMap archeio-github-app already exists. Skipping creation.";
+        fi
 
     - name: Build Quarkus App and Push to Image Registry 
       run: |
