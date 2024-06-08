@@ -35,6 +35,13 @@ public class PostService {
         return postRepository.findAll(username);
     }
 
+    public Post findById(String username, Long postId) {
+
+        return postRepository
+                .findById(username, postId)
+                .orElseThrow(() -> new IllegalStateException("Post not found for username: " + username + " and postId: " + postId));
+    }
+
     public List<Post> findByFolder(String username, String folderId) {
 
         return postRepository.findByFolder(username, folderId);
@@ -109,5 +116,9 @@ public class PostService {
                         });
             }
         }
+    }
+
+    public void deletePost(Post post) {
+        postRepository.deletePost(post);
     }
 }

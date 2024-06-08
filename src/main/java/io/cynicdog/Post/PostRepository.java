@@ -1,5 +1,6 @@
 package io.cynicdog.Post;
 
+import io.cynicdog.Tag.Tag;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -79,5 +80,19 @@ public class PostRepository {
         } else {
             return em.merge(post);
         }
+    }
+
+    public void deletePost(Post post) {
+
+        for (Tag tag : post.getTags()) {
+            tag.removePost(post);
+            em.merge(tag);
+
+            if (tag.getPosts().isEmpty()) {
+                em.remove(tag);
+            }
+        }
+
+        em.remove(post);
     }
 }

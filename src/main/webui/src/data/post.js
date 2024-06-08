@@ -50,3 +50,21 @@ export const fetchPosts = () => {
             throw error;
         });
 };
+
+export const deletePost = async (postId) => {
+
+    return fetch(`/api/post/${username}/${postId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if(!response.ok) {
+                throw new Error('Failed to delete folder');
+            }
+        })
+        .catch(error => {
+            return undefined;
+        });
+};

@@ -1,8 +1,16 @@
 import React from 'react';
 import moment from 'moment';
 import { useSelectedItemContext } from '../Context.jsx';
+import ThreeDots from "../../public/ThreeDots.jsx";
+import Trash from "../../public/Trash.jsx";
+import Pin from "../../public/Pin.jsx";
+import Archive from "../../public/Archive.jsx";
+import { deletePost } from "../data/post.js";
+import {useQueryClient} from "react-query";
 
 const PostSummary = ({ post }) => {
+
+    const queryClient = useQueryClient();
 
     const { selectedPost, setSelectedPost } = useSelectedItemContext();
 
@@ -18,6 +26,12 @@ const PostSummary = ({ post }) => {
         event.stopPropagation();
     };
 
+    const HandlePostDelete = async () => {
+        await deletePost(selectedPost.id);
+        setSelectedPost(null);
+        await queryClient.invalidateQueries('tags');
+    };
+
     const title = post.content.split('\n')[0];
 
     return (
@@ -29,7 +43,8 @@ const PostSummary = ({ post }) => {
                         <span className="s-post-summary--stats-item-unit">votes</span>
                     </div>
                     <div className="s-post-summary--stats-item has-answers has-accepted-answer">
-                        <svg aria-hidden="true" className="svg-icon iconCheckmarkSm" width="14" height="14" viewBox="0 0 14 14">
+                        <svg aria-hidden="true" className="svg-icon iconCheckmarkSm" width="14" height="14"
+                             viewBox="0 0 14 14">
                             <path d="M13 3.41 11.59 2 5 8.59 2.41 6 1 7.41l4 4z"></path>
                         </svg>
                         <span className="s-post-summary--stats-item-number">5</span>
@@ -62,12 +77,44 @@ const PostSummary = ({ post }) => {
                         </div>
                     </div>
                     <div onClick={handleMenuClick}>
-                        <a href="#" className="s-btn s-btn__muted s-post-summary--content-menu-button">
-                            <svg aria-hidden="true" className="svg-icon iconEllipsisVertical" width="17" height="18" viewBox="0 0 17 18">
-                                <path d="M7 4.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m0 5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M8.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"></path>
-                            </svg>
-                            <span className="v-visible-sr">menu</span>
-                        </a>
+                        <div data-controller="s-modal" data-s-modal-return-element="#js-return-focus">
+                            <button
+                                className="btn border border-0 s-post-summary--content-menu-button"
+                                type="button"
+                                id="js-return-focus"
+                                data-action="s-modal#show">
+                                <ThreeDots />
+                            </button>
+                            <aside
+                                className="s-modal"
+                                data-s-modal-target="modal"
+                                id="modal-base"
+                                tabIndex="-1"
+                                role="dialog"
+                                aria-labelledby="modal-title"
+                                aria-describedby="modal-description"
+                                aria-hidden="true">
+                                <div className="s-modal--dialog" role="document">
+                                    <h3 className="s-modal--header fw-lighter pb-4" id="modal-title">Options</h3>
+                                    <div className="s-btn s-btn__danger s-btn__xs fs-6" onClick={HandlePostDelete}>
+                                        <Trash /> delete
+                                    </div>
+                                    <div className="s-btn s-btn__xs fs-6" aria-disabled="true">
+                                        <Pin /> pin
+                                    </div>
+                                    <div className="s-btn s-btn__xs fs-6" aria-disabled="true">
+                                        <Archive /> archive
+                                    </div>
+                                    <div className="d-flex gx8 s-modal--footer">
+                                        <button
+                                            className="ms-auto s-btn s-btn__xs"
+                                            data-action="s-modal#hide">
+                                            close
+                                        </button>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
                     </div>
                 </div>
             </div>
