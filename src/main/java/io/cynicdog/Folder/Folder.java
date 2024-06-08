@@ -98,20 +98,6 @@ public class Folder {
         this.createdAt = createdAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Folder)) return false;
-        Folder folder = (Folder) o;
-        return id.equals(folder.id) &&
-                user.equals(folder.user);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, user);
-    }
-
     static class CompositePrimaryKeys implements Serializable {
 
         private String id;
@@ -131,6 +117,22 @@ public class Folder {
 
         public void setUser(String user) {
             this.user = user;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            CompositePrimaryKeys that = (CompositePrimaryKeys) o;
+            return Objects.equals(id, that.id) &&
+                    Objects.equals(user, that.user);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, user);
         }
     }
 }

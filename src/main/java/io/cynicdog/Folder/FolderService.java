@@ -58,11 +58,23 @@ public class FolderService {
         return returnFolder;
     }
 
+    public Folder findFolderById(String username, String folderId) {
+        return folderRepository
+                .findById(username, folderId)
+                .orElseThrow(() -> new IllegalStateException("Folder not found for username: " + username + " and folderId: " + folderId));
+    }
+
     public String findFolderPathById(String username, String folderId) {
         return folderRepository.findFolderPathById(username, folderId);
     }
 
-    public void deleteFolder(Map<String, Folder> payload) {
-        folderRepository.delete(payload.get("parent"), payload.get("child"));
+    public Folder deleteFolder(Folder folder) {
+
+        if (folder.getParent() != null) {
+            folder.getParent().removeChild(folder);
+        }
+        folderRepository.delete(folder);
+
+        return folder.getParent();
     }
 }

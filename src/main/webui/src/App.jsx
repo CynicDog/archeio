@@ -26,7 +26,7 @@ const App = () => {
         if (isMenuOpen) {
             return selectedPost ? '5' : '9';
         } else {
-            return selectedPost ? '5' : '10';
+            return selectedPost ? '4' : '10';
         }
     };
 
@@ -58,19 +58,19 @@ const App = () => {
                 {/* Master view */}
                 <div className={`col-lg-${getMasterViewColWidth()} mb-3`}>
                     <div className="bs-sm rounded-3 p-3">
-                        <PostArea />
+                        <PostArea isMenuOpen={isMenuOpen} />
                     </div>
                 </div>
                 {/* Detail area */}
                 {selectedPost ? (
                     githubAuthenticated ? (
-                        <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
+                        <div className={`col-lg-${isMenuOpen ? '5' : '7'} mb-3`}>
                             <div style={{position: 'sticky', top: '30px'}}>
                                 <PostInterface/>
                             </div>
                         </div>
                     ) : (
-                        <div className={`col-lg-${isMenuOpen ? '5' : '6'} mb-3`}>
+                        <div className={`col-lg-${isMenuOpen ? '5' : '7'} mb-3`}>
                             <div className="bs-sm rounded-3 p-3 px-5" style={{position: 'sticky', top: '30px'}}>
                                 <div dangerouslySetInnerHTML={{__html: marked.parse(selectedPost.content)}}/>
                             </div>

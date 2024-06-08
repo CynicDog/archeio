@@ -40,17 +40,21 @@ export const saveFolder = async (folder) => {
     return await response.json();
 };
 
-export const deleteFolder = async (parent, child) => {
-    const requestBody = { parent: parent, child: child };
-    const response = await fetch(`/api/folder/${username}`, {
+export const deleteFolder = async (folderId) => {
+
+    return fetch(`/api/folder/${username}/${folderId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestBody)
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to create folder');
-    }
+        }
+    })
+        .then(response => {
+            if(!response.ok) {
+                throw new Error('Failed to delete folder');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            return undefined;
+        });
 };

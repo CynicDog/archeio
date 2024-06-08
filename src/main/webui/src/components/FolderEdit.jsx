@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {saveFolder} from "../data/folder.js";
+import {deleteFolder, saveFolder} from "../data/folder.js";
 import {useQueryClient} from "react-query";
 
-const FolderEdit = ({selectedFolder, setSelectedFolder, setShowFolderInput}) => {
+const FolderEdit = ({selectedFolder, setSelectedFolder, setShowFolderInput, posts}) => {
 
     const queryClient = useQueryClient();
 
@@ -40,14 +40,26 @@ const FolderEdit = ({selectedFolder, setSelectedFolder, setShowFolderInput}) => 
 
         // invalidate query key for fetching folders (thereby effectively refetching)
         await queryClient.invalidateQueries(['folder']);
-        if (selectedFolder) {
-            await queryClient.invalidateQueries(['folderPath', selectedFolder.id]);
+        setSelectedFolder(response);
+
+        setNewFolder('');
+    };
+
+    const handleDeleteFolder = async () => {
+
+        const response = await deleteFolder(selectedFolder.id);
+
+        if (!response) {
+            window.location.reload();
+            return;
         }
 
+        // invalidate query key for fetching folders (thereby effectively refetching)
+        await queryClient.invalidateQueries(['folder']);
         setSelectedFolder(response);
+
         setNewFolder('');
-        setShowFolderInput(false);
-    };
+    }
 
     return (
         <div className="d-flex align-items-center">
@@ -64,6 +76,14 @@ const FolderEdit = ({selectedFolder, setSelectedFolder, setShowFolderInput}) => 
                 onClick={handleCreateFolder} >
                 Create
             </div>
+            {selectedFolder && (
+                <div
+                    className="s-btn s-btn__xs mx-2"
+                    aria-disabled={posts?.length > 0}
+                    onClick={handleDeleteFolder} >
+                    Delete
+                </div>
+            )}
         </div>
     );
 };

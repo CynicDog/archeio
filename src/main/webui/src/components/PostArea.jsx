@@ -8,20 +8,20 @@ import {Spinner} from "@patternfly/react-core";
 import {fetchPostsByTag} from "../data/tag.js";
 import PostEmptyState from "./PostEmptyState.jsx";
 
-const PostArea = () => {
+const PostArea = ({isMenuOpen}) => {
 
     const { selectedFolder, selectedPost } = useSelectedItemContext();
 
     const {data: posts, isLoading, isError, refetch} = useQuery(
         [selectedFolder, selectedPost],
         () => {
-            if (selectedFolder.id === 'tags') {
-                return fetchPostsByTag(selectedFolder.name)
+            if (selectedFolder?.id === 'tags') {
+                return fetchPostsByTag(selectedFolder?.name)
             }
-            else if (selectedFolder.name === 'All') {
+            else if (selectedFolder?.name === 'All') {
                 return fetchPosts();
             } else {
-                return fetchByFolder(selectedFolder.id);
+                return fetchByFolder(selectedFolder?.id);
             }
         });
 
@@ -29,7 +29,7 @@ const PostArea = () => {
 
     return (
         <>
-            <Breadcrumbs postRefetch={refetch}/>
+            <Breadcrumbs postRefetch={refetch} posts={posts} isMenuOpen={isMenuOpen}/>
             {isLoading ? (
                 <div className="d-flex justify-content-center">
                     <Spinner/>

@@ -97,15 +97,10 @@ public class FolderRepository {
                 .getSingleResult();
     }
 
-    public void delete(Folder parent, Folder child) {
-        if (parent != null && child != null) {
-            Folder managedParent = em.find(Folder.class, parent.getId());
-            Folder managedChild = em.find(Folder.class, child.getId());
-
-            if (managedParent != null && managedChild != null) {
-                managedParent.removeChild(managedChild);
-                em.remove(managedChild);
-            }
+    public void delete(Folder folder) {
+        if (!em.contains(folder)) {
+            folder = em.merge(folder);
         }
+        em.remove(folder);
     }
 }
