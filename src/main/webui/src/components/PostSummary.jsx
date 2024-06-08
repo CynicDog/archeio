@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { useSelectedItemContext } from '../Context.jsx';
+import {useAuth, useSelectedItemContext} from '../Context.jsx';
 import ThreeDots from "../../public/ThreeDots.jsx";
 import Trash from "../../public/Trash.jsx";
 import Pin from "../../public/Pin.jsx";
@@ -13,6 +13,7 @@ const PostSummary = ({ post }) => {
     const queryClient = useQueryClient();
 
     const { selectedPost, setSelectedPost } = useSelectedItemContext();
+    const { githubAuthenticated } = useAuth();
 
     const handlePostClick = () => {
         if (selectedPost && selectedPost.id === post.id) {
@@ -76,46 +77,48 @@ const PostSummary = ({ post }) => {
                             </div>
                         </div>
                     </div>
-                    <div onClick={handleMenuClick}>
-                        <div data-controller="s-modal" data-s-modal-return-element="#js-return-focus">
-                            <button
-                                className="btn border border-0 s-post-summary--content-menu-button"
-                                type="button"
-                                id="js-return-focus"
-                                data-action="s-modal#show">
-                                <ThreeDots />
-                            </button>
-                            <aside
-                                className="s-modal"
-                                data-s-modal-target="modal"
-                                id="modal-base"
-                                tabIndex="-1"
-                                role="dialog"
-                                aria-labelledby="modal-title"
-                                aria-describedby="modal-description"
-                                aria-hidden="true">
-                                <div className="s-modal--dialog" role="document">
-                                    <h3 className="s-modal--header fw-lighter pb-4" id="modal-title">Options</h3>
-                                    <div className="s-btn s-btn__danger s-btn__xs fs-6" onClick={HandlePostDelete}>
-                                        <Trash /> delete
+                    {githubAuthenticated && (
+                        <div onClick={handleMenuClick}>
+                            <div data-controller="s-modal" data-s-modal-return-element="#js-return-focus">
+                                <button
+                                    className="btn border border-0 s-post-summary--content-menu-button"
+                                    type="button"
+                                    id="js-return-focus"
+                                    data-action="s-modal#show">
+                                    <ThreeDots />
+                                </button>
+                                <aside
+                                    className="s-modal"
+                                    data-s-modal-target="modal"
+                                    id="modal-base"
+                                    tabIndex="-1"
+                                    role="dialog"
+                                    aria-labelledby="modal-title"
+                                    aria-describedby="modal-description"
+                                    aria-hidden="true">
+                                    <div className="s-modal--dialog" role="document">
+                                        <h3 className="s-modal--header fw-lighter pb-4" id="modal-title">Options</h3>
+                                        <div className="s-btn s-btn__danger s-btn__xs fs-6" onClick={HandlePostDelete}>
+                                            <Trash /> delete
+                                        </div>
+                                        <div className="s-btn s-btn__xs fs-6" aria-disabled="true">
+                                            <Pin /> pin
+                                        </div>
+                                        <div className="s-btn s-btn__xs fs-6" aria-disabled="true">
+                                            <Archive /> archive
+                                        </div>
+                                        <div className="d-flex gx8 s-modal--footer">
+                                            <button
+                                                className="ms-auto s-btn s-btn__xs"
+                                                data-action="s-modal#hide">
+                                                close
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="s-btn s-btn__xs fs-6" aria-disabled="true">
-                                        <Pin /> pin
-                                    </div>
-                                    <div className="s-btn s-btn__xs fs-6" aria-disabled="true">
-                                        <Archive /> archive
-                                    </div>
-                                    <div className="d-flex gx8 s-modal--footer">
-                                        <button
-                                            className="ms-auto s-btn s-btn__xs"
-                                            data-action="s-modal#hide">
-                                            close
-                                        </button>
-                                    </div>
-                                </div>
-                            </aside>
+                                </aside>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
