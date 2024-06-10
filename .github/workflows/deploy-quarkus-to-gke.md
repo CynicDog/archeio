@@ -174,7 +174,7 @@ Let's go through each step in detail:
 
   ```
   %prod.quarkus.kubernetes-config.enabled=true
-  %prod.quarkus.kubernetes-config.config-maps={A_CONFIG_NAME}
+  %prod.quarkus.kubernetes-config.config-maps={A_CONFIG_MAP_NAME}
   A_CONFIG_PROPERTY_1=
   A_CONFIG_PROPERTY_2=
   ```
