@@ -27,6 +27,7 @@ jobs:
       with:
         distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: '17'
+        cache: 'maven'
     
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
