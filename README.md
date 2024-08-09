@@ -9,8 +9,9 @@
 4. [Local Deployment with Minikube](#local-deployment-with-minikube)
     1. [Prerequisites](#prerequisites)
     2. [Configure Docker Client for Minikube](#configure-docker-client-for-minikube)
-    3. [Package and Deploy the Application](#package-and-deploy-the-application)
-    4. [Test Deployment](#test-deployment)
+    3. [Persistence Configuration and Running up the Service](#persistence-configuration-and-running-up-the-service)
+    4. [Package and Deploy the Application](#package-and-deploy-the-application)
+    5. [Test Deployment](#test-deployment)
 5. [Deployment to Google Kubernetes Engine (GKE)](#deployment-to-google-kubernetes-engine-gke)
     1. [Configure Google Cloud SDK](#configure-google-cloud-sdk)
     2. [Configure Docker Authentication for GCR](#configure-docker-authentication-for-gcr)
@@ -47,6 +48,13 @@ minikube start
 Configure the local Docker client to use the Docker daemon running inside Minikube:
 ```bash
 eval $(minikube docker-env)
+```
+
+### Persistence Configuration and Running up the Service
+Generate Kubernetes Secret to initialize the database server and grant access:
+```bash
+kubectl create secret generic db-credentials --from-literal=username={USERNAME} --from-literal=password={PASSWORD}
+kubectl apply -f postgresql_kubernetes.yml
 ```
 
 ### Package and Deploy the Application
