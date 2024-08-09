@@ -1,105 +1,160 @@
 [![Backup PostgreSQL Database for macOS arm64](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml)
 [![Deploy Quarkus App onto GKE](https://github.com/CynicDog/archeio/actions/workflows/deploy-quarkus-to-gke.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/deploy-quarkus-to-gke.yml)
 [![CodeQL](https://github.com/CynicDog/archeio/actions/workflows/codeql.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/codeql.yml)
+# Index 
 
-# Welcome to Archeio
+1. [Deploying Vert.x in Quarkus Application on GKE](#deploying-vertx-in-quarkus-application-on-gke)
+2. [Development Environment](#development-environment)
+3. [Technologies Used](#technologies-used)
+4. [Local Deployment with Minikube](#local-deployment-with-minikube)
+    1. [Prerequisites](#prerequisites)
+    2. [Configure Docker Client for Minikube](#configure-docker-client-for-minikube)
+    3. [Package and Deploy the Application](#package-and-deploy-the-application)
+    4. [Test Deployment](#test-deployment)
+5. [Deployment to Google Kubernetes Engine (GKE)](#deployment-to-google-kubernetes-engine-gke)
+    1. [Configure Google Cloud SDK](#configure-google-cloud-sdk)
+    2. [Configure Docker Authentication for GCR](#configure-docker-authentication-for-gcr)
+    3. [Build and Push Container Image to GCR](#build-and-push-container-image-to-gcr)
+    4. [Create a GKE Cluster](#create-a-gke-cluster)
+    5. [Connect to GKE Cluster](#connect-to-gke-cluster)
+    6. [Deploy the Application to GKE](#deploy-the-application-to-gke)
+    7. [Reserve Static IP Address for the Deployed App](#reserve-static-ip-address-for-the-deployed-app)
+    8. [Create DNS record set](#create-dns-record-set)
+6. [Conclusion](#conclusion)
 
-Archeio is a personal note-taking app designed to help you organize your thoughts and ideas seamlessly. Built on the Quarkus Java runtime environment and deployed on Google Kubernetes Engine (GKE), Archeio offers an efficient platform for all your note-taking needs.
+# Deploying Vert.x in Quarkus Application on GKE
 
-## How to Use Archeio
+This project demonstrates deploying a Quarkus-based Vert.x application to Google Kubernetes Engine (GKE).
 
-### Sign In Using GitHub OAuth2
+## Development Environment
+- **Operating System**: macOS 13.2.1 (Build 22D68)
 
-1. **Select GitHub for Authentication**:
+## Technologies Used
+- **Quarkus**: A Kubernetes-native Java framework designed for fast startup and low memory footprint.
+- **Minikube**: A tool to run a single-node Kubernetes cluster locally for development and testing.
+- **Google Kubernetes Engine (GKE)**: A managed Kubernetes service provided by Google Cloud Platform (GCP).
+- **Jib**: A container image building tool that simplifies packaging Java applications into container images without needing a Dockerfile.
 
-   - Click on the "Sign in" button. This will redirect you to the GitHub OAuth2 authentication page.
+# Local Deployment with Minikube
 
-2. **Authorize Archeio**:
+### Prerequisites
+- Ensure Minikube is installed and initialized:
+```bash
+minikube start
+```
 
-   - If prompted, log in to your GitHub account.
+### Configure Docker Client for Minikube
+Configure the local Docker client to use the Docker daemon running inside Minikube:
+```bash
+eval $(minikube docker-env)
+```
 
-   - Authorize Archeio to access your GitHub account by clicking "Authorize".
+### Package and Deploy the Application
+Build and deploy the application to Minikube with ARM64 platform support:
+```bash
+mvn clean package -Dquarkus.container-image.build=true \
+    -Dquarkus.jib.platforms=linux/arm64/v8 \
+    -Dquarkus.kubernetes.deploy=true
+```
 
-3. **Complete Sign-In**:
+### Test Deployment
+Make a request to the deployed service to ensure successful deployment:
+```bash
+kubectl exec -it vertx-quarkus-demo-<POD_ID> -- /bin/bash
+curl http://vertx-quarkus-demo/greeting
+```
 
-   - You will be redirected back to Archeio, now signed in with your GitHub account.
+# Deployment to Google Kubernetes Engine (GKE)
 
-### Add a Folder on the Left Sidebar Menu
+### Configure Google Cloud SDK
+Initialize and configure the Google Cloud SDK for authentication:
+```bash
+gcloud auth login
+gcloud init
+```
 
-1. **Locate the Sidebar**:
+### Configure Docker Authentication for GCR
+Configure Docker authentication information to interact with Google Artifact Registry for Docker: 
+```bash
+gcloud auth configure-docker
+```
 
-   - On the main dashboard, find the left sidebar menu where your folders and notes are listed.
+### Build and Push Container Image to GCR
+Build and push the container image to Google Container Registry using Jib:
+```bash
+mvn clean package -Dquarkus.container-image.build=true \
+    -Dquarkus.container-image.push=true \
+    -Dquarkus.jib.platforms=linux/arm64/v8
+```
 
-2. **Add a New Folder**:
+### Create a GKE Cluster
+Create a Kubernetes cluster on Google Kubernetes Engine:
+<img width="1423" alt="Capture 2024-04-07 at 11 48 25 AM" src="https://github.com/CynicDog/Vertx-Quarkus-GKE/assets/96886982/d9d05f46-4f13-4736-a6dc-8a89201b9208">
 
-   - Look for an "Add Folder" button or a "+" icon at the top or bottom of the sidebar.
+### Connect to GKE Cluster
+Connect your terminal to the generated Kubernetes cluster on GKE:
+```bash
+gcloud container clusters get-credentials {YOUR_CLUSTER_NAME} --region {YOUR_REGION} --project {YOUR_PROJECT_ID}
+```
 
-   - Click on this button to create a new folder.
+### Deploy the Application to GKE
+Deploy the Quarkus application to the GKE cluster:
+```bash
+mvn clean package -Dquarkus.kubernetes.deploy=true
+```
 
-   - Enter a name for your new folder in the dialog that appears.
+### Reserve Static IP Address for the Deployed App
 
-   - Confirm to add the folder to the sidebar.
+To expose a Quarkus application to the public via Ingress with a global static IP address, follow these steps:
 
-### Add Subfolders via the Breadcrumbs Create Button
+1. **Create a Global Static IP Address:**
+   ```bash
+   gcloud compute addresses create {A_NAME_FOR_GLOBAL_STATIC_IP} --global
+   ```
 
-1. **Navigate to the Parent Folder**:
+2. **Update Configuration:**
+   Add the following configuration, ensuring to include double quotation marks as shown:
+   ```yaml
+   quarkus:
+     kubernetes:
+       ingress:
+         expose: true
+         annotations:
+           "kubernetes.io/ingress.global-static-ip-name": "{A_NAME_FOR_GLOBAL_STATIC_IP}"
+   ```
 
-   - Click on the parent folder where you want to add a subfolder. This will open the folder and show its contents.
+3. **Verify Configuration:**
+   Once configured, the generated `kubernetes.yml` manifest should contain the following in the `metadata.annotations` section:
+   ```yaml
+   metadata:
+     annotations:
+       kubernetes.io/ingress.global-static-ip-name: {A_NAME_FOR_GLOBAL_STATIC_IP}
+   ```
 
-2. **Use the Breadcrumbs Create Button**:
+4. **Check Deployment:**
+   Verify if the application is deployed with the reserved static IP address:
+   ```bash
+   kubectl get ingress
+   ```
 
-   - At the top of the folder view, you will see a breadcrumb navigation bar.
+   Example output:
+   ```plaintext
+   NAME      CLASS    HOSTS   ADDRESS              PORTS   AGE
+   {PROJECT} <none>   *       {GIVEN_STATIC_IP}    80      31m
+   ```
 
-   - Next to the breadcrumb path, there should be a "Create" button or a "+" icon.
-
-   - Click on this button to create a new subfolder.
-
-3. **Enter Subfolder Details**:
-
-   - Enter the name of the subfolder in the dialog that appears.
-
-   - Confirm to add the subfolder under the selected parent folder.
-
-### Tag a Post by Typing a #tag in the Rich Text Editor
-
-1. **Open the Rich Text Editor**:
-
-   - Create a new note or open an existing one where you want to add tags.
-
-2. **Add Tags in the Editor**:
-
-   - While typing your note, you can create a tag by typing `#` followed by the tag name (e.g., `#important`).
-
-   - The editor should automatically recognize the `#` symbol and format it as a tag.
-
-3. **Manage Tags**:
-
-   - Tags will appear as part of the note content. You can click on them to see all notes with the same tag or to edit them.
-
-## Contributing
-
-We welcome contributions from the community! Here are a few ways you can get involved:
-
-- **Report Bugs**: If you find a bug, please open an issue.
-
-- **Submit Pull Requests**: We accept pull requests for new features, bug fixes, and improvements.
-
-- **Improve Documentation**: Help us improve our documentation by making it clearer and more comprehensive.
-
-## Code of Conduct
-
-We are committed to providing a friendly, safe, and welcoming environment for all. Please read and adhere to our Code of Conduct.
-
-## Contact
-
-If you have any questions, feel free to reach out to us:
-
-- **Email**: thecynicdog0328@gmail.com
-
-- **GitHub**: [github.com/CynicDog/archeio](https://github.com/CynicDog/archeio)
-
-Thank you for your interest in Archeio! We look forward to collaborating with you.
-
-`#archeio`
+5. **Test Deployment:**
+   Ensure the application is accessible using the reserved static IP address:
+   ```bash
+   http http://{GIVEN_STATIC_IP}/
+   ```
 
 
+### Create DNS record set 
+To point your domain to the deployed application using the reserved static IP address, you can use the Google Cloud DNS service:
+```bash
+gcloud dns --project={YOUR_PROJECT_NAME} record-sets create {ENTER_PREFIX_HERE}.{YOUR_DNS_NAME} --zone={YOUR_ZONE} --type="A" --ttl="300" --rrdatas={RESERVED_STATIC_IP}
+```
+
+## Conclusion
+By following these steps, you can deploy your Vert.x in Quarkus application both locally with Minikube for testing and on Google Kubernetes Engine (GKE) for production. This streamlined deployment process leverages modern tools like Jib and GKE to simplify container image building and Kubernetes orchestration.
