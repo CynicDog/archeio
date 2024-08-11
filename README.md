@@ -1,6 +1,11 @@
+
 [![Backup PostgreSQL Database for macOS arm64](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/psql-backup-macOS-arm64.yml)
 [![Deploy Quarkus App onto GKE](https://github.com/CynicDog/archeio/actions/workflows/deploy-quarkus-to-gke.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/deploy-quarkus-to-gke.yml)
 [![CodeQL](https://github.com/CynicDog/archeio/actions/workflows/codeql.yml/badge.svg)](https://github.com/CynicDog/archeio/actions/workflows/codeql.yml)
+
+#### Read more about the project in [my article](https://cynicdog.github.io/posts/quarkus-deploy-with-github-actions/) 📰
+
+
 # Index 
 
 1. [Deploying Vert.x in Quarkus Application on GKE](#deploying-vertx-in-quarkus-application-on-gke)
